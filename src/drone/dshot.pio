@@ -1,0 +1,60 @@
+.program dshot
+
+.wrap_target
+
+; najpierw przerwa miedzy ramkami (o dlugosci 21 bitow)
+
+    set X, 15            ; 21 = 20 + 1, frame_space_loop wykona sie 21 razy
+
+frame_space_loop:
+    set pins, 0 [25]     ; 27 = 25 + 1 + 1
+    jmp X--, frame_space_loop
+
+; X == 0, zaraz koniec przerwy i poczatek 16 bitowego sygnalu (kilka instukcji nizej wlicza sie w przerwe)
+
+    pull
+    set X, 15            ; 16 = 15 + 1, odczytywanie bitu wykona sie 16 razy
+
+loop:
+    out Y, 1             ; bit przeniesiony zostaje do rejestru Y
+    jmp !Y, put_low      ; Y = 0, skok
+; w przeciwnym wypadku Y = 1, stan wysoki (20 ON, 7 OFF)
+    set pins, 1 [19]     ; 20 cykli on (19 + 1(instrukcja))
+    set pins, 0 [3]      ; 7 cykli off (3 + 1(instrukcja) + 1(skok do loop) + 1 (out Y, 1) + 1 (jmp !Y, put_low))
+bit_end:
+    jmp X--, loop        ; jesli x != 0, to x -= 1 i skok
+; w przeciwnym wypadku wrap, czyli przerwa miedzy ramkami
+
+.wrap
+
+put_low:                ; Y = 0, stan niski (10 ON, 17 OFF)
+    set pins, 1 [9]     ; 10 = 9 + 1 (instrukcja)
+    set pins, 0 [12]    ; 17 = 12 + 1 (instrukcja) + 1 (skok do bit_end) + 1 (skok do loop) + 1 (out Y, 1) + 1 (jmp !Y, put_low)
+    jmp bit_end
+
+% c-sdk {
+static inline void dshot_program_init(PIO pio, uint sm, uint offset, uint pin) {
+
+    pio_sm_config c = dshot_program_get_default_config(offset);
+
+    // Map the state machine's SET pin group to one pin, namely the `pin`
+    // parameter to this function.
+    sm_config_set_set_pins(&c, pin, 1);
+
+    // Set this pin's GPIO function (connect PIO to the pad)
+    pio_gpio_init(pio, pin);
+
+    // Set the pin direction to output at the PIO
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+
+    // Set clock divider
+    sm_config_set_clkdiv_int_frac(&c, 5, 0);
+
+    // Load our configuration, and jump to the start of the program
+    pio_sm_init(pio, sm, offset, &c);
+
+    // Set the state machine running
+    pio_sm_set_enabled(pio, sm, true);
+    
+}
+%}
