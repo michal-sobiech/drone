@@ -5,8 +5,8 @@
 
 NRF24L01Plus::NRF24L01Plus() {}
 
-NRF24L01Plus::NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce, bool mode):
-spi_(spi), csn_(csn), ce_(ce), mode_(mode)
+NRF24L01Plus::NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce, bool default_mode):
+spi_(spi), csn_(csn), ce_(ce), mode_(default_mode)
 {
     spi_init(spi_, SPI_BAUDRATE);
 
@@ -91,4 +91,33 @@ void NRF24L01Plus::setToRX() {
     uint8_t reg_contents = read_register(0xff);
     reg_contents = reg_contents | 0b00000001;
     write_register(0xff, reg_contents);
+}
+
+void NRF24L01Plus::sendByte(uint8_t data) {
+    setToTX();
+    // W_TX_PAYLOAD command is 1010 0000
+    uint8_t cmd = 0b10100000;
+    spi_write_blocking(spi_, &cmd, 1);
+    // Now send the data
+    spi_write_blocking(spi_, &data, 1);
+}
+
+uint8_t NRF24L01Plus::receiveByte() {
+    setToRX();
+    // R_RX_PAYLOAD command is 0110 0001
+    uint8_t cmd = 0b01100001;
+    spi_read_blocking(spi_, &cmd, 1);
+    // Now send the data
+    uint8_t data;
+    spi_read_blocking(spi_, &data, 1);
+}
+
+void NRF24L01Plus::spi_write_one_byte(uint8_t* data) {
+    spi_write_blocking(spi_, data, 1);
+}
+
+uint8_t NRF24L01Plus::spi_read_one_byte(spi_inst_t* spi) {
+    uint8_t read_data;
+    spi_read_blocking(spi_, 0xff, &read_data, 1);
+    return read_data;
 }
