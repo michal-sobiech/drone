@@ -49,21 +49,21 @@ target_link_libraries(${NRF24L01_plus_TARGET}
     hardware_spi
 )
 
-# Controller
-set(CONTROLLER_TARGET controller)
-file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
-add_executable(${CONTROLLER_TARGET}
-    ${CONTROLLER_SRC_FILES}
-)
-target_include_directories(${CONTROLLER_TARGET}
-    PUBLIC
-    include/controller
-)
-target_link_libraries(${CONTROLLER_TARGET}
-    pico_stdlib
-    hardware_pio
-    hardware_spi
-)
+# # Controller
+# set(CONTROLLER_TARGET controller)
+# file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
+# add_executable(${CONTROLLER_TARGET}
+#     ${CONTROLLER_SRC_FILES}
+# )
+# target_include_directories(${CONTROLLER_TARGET}
+#     PUBLIC
+#     include/controller
+# )
+# target_link_libraries(${CONTROLLER_TARGET}
+#     pico_stdlib
+#     hardware_pio
+#     hardware_spi
+# )
 
 pico_enable_stdio_usb(drone 1)
 pico_enable_stdio_uart(drone 1)
