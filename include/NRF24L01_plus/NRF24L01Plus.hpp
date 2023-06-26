@@ -15,7 +15,7 @@ class NRF24L01Plus
 {
 public:
     NRF24L01Plus();
-    NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce);
+    NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce, bool mode);
     void write_register(uint8_t reg, uint8_t data);
     uint8_t read_register(uint8_t reg);
     void setChosen();
@@ -26,5 +26,6 @@ private:
     spi_inst_t* spi_;
     uint csn_;
     uint ce_;
+    bool mode_;
     void setCSN(bool isChosen);
 };

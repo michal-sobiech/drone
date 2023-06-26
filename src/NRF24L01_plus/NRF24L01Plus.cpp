@@ -6,7 +6,7 @@
 NRF24L01Plus::NRF24L01Plus() {}
 
 NRF24L01Plus::NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce, bool mode):
-spi_(spi), csn_(csn), ce_(ce)
+spi_(spi), csn_(csn), ce_(ce), mode_(mode)
 {
     spi_init(spi_, SPI_BAUDRATE);
 
@@ -25,7 +25,7 @@ spi_(spi), csn_(csn), ce_(ce)
     // bits 4 - 7 = 0, but I dont really know why
     uint8_t config_settings = 0b00001010;
     // bit 0
-    config_settings = config_settings + mode;
+    config_settings = config_settings + mode_;
     write_register(0x00, config_settings);
     // Wait 1,5 ms
     sleep_us(2000);
