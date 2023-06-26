@@ -19,6 +19,6 @@ Drone::Drone()
     // Engine configuration
     for (uint i = 0; i < NR_OF_ENGINES; i++)
     {
-        engines[i] = Engine(PIO, engine_sm_ids[i], engine_pins[i]);
+        engines_[i] = Engine(PIO, engine_sm_ids[i], engine_pins[i]);
     }
 }

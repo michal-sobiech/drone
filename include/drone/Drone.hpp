@@ -22,7 +22,7 @@ class Drone
     public:
         Drone();
     private:
-        char engine_pins[NR_OF_ENGINES];
-        char engine_sm_ids[NR_OF_ENGINES];
-        Engine engines[NR_OF_ENGINES];
+        char engine_pins_[NR_OF_ENGINES];
+        char engine_sm_ids_[NR_OF_ENGINES];
+        Engine engines_[NR_OF_ENGINES];
 };

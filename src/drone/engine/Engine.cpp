@@ -10,8 +10,8 @@ Engine::Engine(PIO pio, uint state_machine_id, uint pin):
 pio_(pio), state_machine_id_(state_machine_id), pin_(pin)
 {
     // Initiate the pio program
-    uint offset = pio_add_program(pio, &dshot_program);
-    dshot_program_init(pio, state_machine_id, offset, pin);
+    uint offset = pio_add_program(pio_, &dshot_program);
+    dshot_program_init(pio_, state_machine_id_, offset, pin_);
 }
 
 void Engine::set_thrust(float thrust_level) 
@@ -21,7 +21,7 @@ void Engine::set_thrust(float thrust_level)
         return;
     }
     uint dshot600_code = percentage_to_DSHOT600(thrust_level, 0);
-    pio_sm_put(pio, state_machine_id, dshot600_code);
+    pio_sm_put(pio_, state_machine_id_, dshot600_code);
 }
 
 uint Engine::percentage_to_DSHOT600(float thrust_level, char telemetry_bit)
