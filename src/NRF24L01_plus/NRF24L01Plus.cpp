@@ -57,7 +57,7 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
     // Choose the register
     spi_write_blocking(spi_, &cmd, 1);
     // Read the data
-    // The 0xff is sent, because it is recognized as
+    // The 0xff is sent because it is recognized as
     // a NOP command by the NRF24L01+ module.
     spi_read_blocking(spi_, 0xff, &read_data, 1);
     setNotChosen();
