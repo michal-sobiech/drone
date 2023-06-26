@@ -8,6 +8,8 @@
 #define SPI_MOSI_PIN 3
 #define SPI_MISO_PIN 4
 
+#define TX 0
+#define RX 1
 
 class NRF24L01Plus
 {
