@@ -15,19 +15,16 @@ spi_(spi), csn_(csn), ce_(ce)
     gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
 
     // NRF24L01+ config
-    setNotChosen();
     setChosen();
-    sleep_ms(11);   // little over 10,3 ms
-
     // At 0x00:
     // bit 0 does not matter because it will be set later
     // bit 1 = 1 because we turn the module on,
     // bit 2 = 0 because we want the 1 byte crc
     // bit 3 = 1 because we want the crc
     // bits 4 - 7 = 0, but I dont really know why
-
     write_register(0x00, 0b00001010);
-    sleep_us(1500);
+    // Wait 1,5 ms
+    sleep_us(2000);
 }
 
 void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
@@ -36,14 +33,13 @@ void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
     // We create it by performing a bitwise OR
     // of the command code (001) and the 5-bit argument (AAAAA)
     uint8_t cmd = 0b00100000 | (reg & 0b00011111);
-    setChosen();
 
+    setChosen();
     // The process consists of 2 spi cycles.
     // First choose the register,
     spi_write_blocking(spi_, &cmd, 1);
     // then write the data
     spi_write_blocking(spi_, &data, 1);
-
     setNotChosen();
 }
 
@@ -51,16 +47,14 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
 {
     uint8_t read_data;
     uint8_t cmd = 0b00011111 & reg;
+
     setChosen();
-    
     // Choose the register
     spi_write_blocking(spi_, &cmd, 1);
-
     // Read the data
     // The 0xff is sent, because it is recognized as
     // a NOP command by the NRF24L01+ module.
     spi_read_blocking(spi_, 0xff, &read_data, 1);
-
     setNotChosen();
 
     return read_data;
