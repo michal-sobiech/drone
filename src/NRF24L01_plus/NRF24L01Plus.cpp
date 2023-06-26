@@ -15,8 +15,8 @@ spi_(spi), csn_(csn), ce_(ce)
     gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
 
     // NRF24L01+ config
-    // cnsHigh();
-    // csnLow();
+    setNotChosen();
+    setChosen();
     sleep_ms(11);   // little over 10,3 ms
 
     // At 0x00:
@@ -28,28 +28,30 @@ spi_(spi), csn_(csn), ce_(ce)
 
     write_register(0x00, 0b00001010);
     sleep_us(1500);
-
 }
 
 void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
 {
+    // Command W_REGISTER is 001A AAAA.
+    // We create it by performing a bitwise OR
+    // of the command code (001) and the 5-bit argument (AAAAA)
     uint8_t cmd = 0b00100000 | (reg & 0b00011111);
-    // csnLow();
+    setChosen();
 
-    // Choose the register
+    // The process consists of 2 spi cycles.
+    // First choose the register,
     spi_write_blocking(spi_, &cmd, 1);
-
-    // Write the data
+    // then write the data
     spi_write_blocking(spi_, &data, 1);
 
-    // csnHigh();
+    setNotChosen();
 }
 
 uint8_t NRF24L01Plus::read_register(uint8_t reg)
 {
     uint8_t read_data;
     uint8_t cmd = 0b00011111 & reg;
-    // csnLow();
+    setChosen();
     
     // Choose the register
     spi_write_blocking(spi_, &cmd, 1);
@@ -59,7 +61,21 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
     // a NOP command by the NRF24L01+ module.
     spi_read_blocking(spi_, 0xff, &read_data, 1);
 
-    // csnHigh();
+    setNotChosen();
 
     return read_data;
+}
+
+void NRF24L01Plus::setCSN(bool isChosen) {
+    gpio_put(csn_, isChosen);
+}
+
+void NRF24L01Plus::setChosen() {
+    // The device is chosen when CSN = 0
+    setCSN(0);
+}
+
+void NRF24L01Plus::setNotChosen() {
+    // The device is NOT chosen when CSN = 1
+    setCSN(1);
 }

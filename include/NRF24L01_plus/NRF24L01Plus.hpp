@@ -16,8 +16,11 @@ public:
     NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce);
     void write_register(uint8_t reg, uint8_t data);
     uint8_t read_register(uint8_t reg);
+    void setChosen();
+    void setNotChosen();
 private:
     spi_inst_t* spi_;
     uint csn_;
     uint ce_;
+    void setCSN(bool isChosen);
 };
