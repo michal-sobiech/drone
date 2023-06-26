@@ -1,7 +1,7 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include <cstdio>
-#include "NRF24L01PlusRX.hpp"
+#include "NRF24L01Plus.hpp"
 
 NRF24L01Plus::NRF24L01Plus() {}
 
@@ -78,4 +78,18 @@ void NRF24L01Plus::setChosen() {
 void NRF24L01Plus::setNotChosen() {
     // The device is NOT chosen when CSN = 1
     setCSN(1);
+}
+
+void NRF24L01Plus::setToTX() {
+    // TX module, so set the bit nr 0 (LSB) to 0
+    uint8_t reg_contents = read_register(0xff);
+    reg_contents = reg_contents & 0b11111110;
+    write_register(0xff, reg_contents);
+}
+
+void NRF24L01Plus::setToRX() {
+    // RX module, so set the bit nr 0 (LSB) to 1
+    uint8_t reg_contents = read_register(0xff);
+    reg_contents = reg_contents | 0b00000001;
+    write_register(0xff, reg_contents);
 }

@@ -18,6 +18,8 @@ public:
     uint8_t read_register(uint8_t reg);
     void setChosen();
     void setNotChosen();
+    void setToTX();
+    void setToRX();
 private:
     spi_inst_t* spi_;
     uint csn_;
