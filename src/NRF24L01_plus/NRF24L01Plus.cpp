@@ -1,11 +1,11 @@
-#include "RC_Module.hpp"
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include <cstdio>
+#include "NRF24L01PlusRX.hpp"
 
-RC_Module::RC_Module() {}
+NRF24L01Plus::NRF24L01Plus() {}
 
-RC_Module::RC_Module(spi_inst_t* spi, uint csn, uint ce):
+NRF24L01Plus::NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce):
 spi_(spi), csn_(csn), ce_(ce)
 {
     spi_init(spi_, SPI_BAUDRATE);
@@ -31,7 +31,7 @@ spi_(spi), csn_(csn), ce_(ce)
 
 }
 
-void RC_Module::write_register(uint8_t reg, uint8_t data)
+void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
 {
     uint8_t cmd = 0b00100000 | (reg & 0b00011111);
     // csnLow();
@@ -45,7 +45,7 @@ void RC_Module::write_register(uint8_t reg, uint8_t data)
     // csnHigh();
 }
 
-uint8_t RC_Module::read_register(uint8_t reg)
+uint8_t NRF24L01Plus::read_register(uint8_t reg)
 {
     uint8_t read_data;
     uint8_t cmd = 0b00011111 & reg;
