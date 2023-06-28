@@ -30,6 +30,6 @@ private:
     uint8_t read_register(uint8_t reg);
     void setToTX();
     void setToRX();
-    void spi_write_one_byte(uint8_t* data);
+    void spi_write_one_byte(uint8_t data);
     uint8_t spi_read_one_byte();
 };

@@ -41,25 +41,24 @@ void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
     setChosen();
     // The process consists of 2 spi cycles.
     // First choose the register,
-    spi_write_blocking(spi_, &cmd, 1);
+    spi_write_one_byte(cmd);
     // then write the data
-    spi_write_blocking(spi_, &data, 1);
+    spi_write_one_byte(data);
     setNotChosen();
 }
 
 uint8_t NRF24L01Plus::read_register(uint8_t reg)
 {
-    uint8_t read_data;
     // Command R_REGISTER is 000A AAAA
     uint8_t cmd = 0b00011111 & reg;
 
     setChosen();
     // Choose the register
-    spi_write_blocking(spi_, &cmd, 1);
+    spi_write_one_byte(cmd);
     // Read the data
     // The 0xff is sent because it is recognized as
     // a NOP command by the NRF24L01+ module.
-    spi_read_blocking(spi_, 0xff, &read_data, 1);
+    uint8_t read_data = spi_read_one_byte();
     setNotChosen();
 
     return read_data;
@@ -97,26 +96,25 @@ void NRF24L01Plus::sendByte(uint8_t data) {
     setToTX();
     // W_TX_PAYLOAD command is 1010 0000
     uint8_t cmd = 0b10100000;
-    spi_write_blocking(spi_, &cmd, 1);
+    spi_write_one_byte(cmd);
     // Now send the data
-    spi_write_blocking(spi_, &data, 1);
+    spi_write_one_byte(data);
 }
 
 uint8_t NRF24L01Plus::receiveByte() {
     setToRX();
     // R_RX_PAYLOAD command is 0110 0001
     uint8_t cmd = 0b01100001;
-    spi_read_blocking(spi_, &cmd, 1);
-    // Now send the data
-    uint8_t data;
-    spi_read_blocking(spi_, &data, 1);
+    spi_write_one_byte(cmd);
+    // Now read the data
+    return spi_read_one_byte();
 }
 
-void NRF24L01Plus::spi_write_one_byte(uint8_t* data) {
-    spi_write_blocking(spi_, data, 1);
+void NRF24L01Plus::spi_write_one_byte(uint8_t data) {
+    spi_write_blocking(spi_, &data, 1);
 }
 
-uint8_t NRF24L01Plus::spi_read_one_byte(spi_inst_t* spi) {
+uint8_t NRF24L01Plus::spi_read_one_byte() {
     uint8_t read_data;
     spi_read_blocking(spi_, 0xff, &read_data, 1);
     return read_data;
