@@ -33,40 +33,31 @@ pico_generate_pio_header(${PROJECT_NAME}
     ${CMAKE_CURRENT_LIST_DIR}/src/drone/dshot.pio
 )
 
-# Controller
-set(CONTROLLER_TARGET controller)
-file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
-add_executable(${CONTROLLER_TARGET}
-    ${CONTROLLER_SRC_FILES}
-)
-target_include_directories(${CONTROLLER_TARGET}
-    PUBLIC
-    include/controller
-)
-target_link_libraries(${CONTROLLER_TARGET}
-    pico_stdlib
-    hardware_pio
-    hardware_spi
-)
-
-# NRF24L01+
-set(NRF24L01_plus_TARGET NRF24L01_plus)
-file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
-add_library(${NRF24L01_plus_TARGET}
-    ${NRF24L01_plus_SRC_FILES}
-    # src/NRF24L01_plus/RC_Module.cpp
-)
-target_include_directories(${NRF24L01_plus_TARGET}
-    PRIVATE
-    include/NRF24L01_plus
-)
-target_link_libraries(${NRF24L01_plus_TARGET} 
-    pico_stdlib
-    hardware_spi
-)
-
 pico_enable_stdio_usb(drone 1)
 pico_enable_stdio_uart(drone 1)
 
 pico_add_extra_outputs(drone)
 
+# Controller
+set(CONTROLLER_TARGET controller)
+file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
+file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
+add_executable(${CONTROLLER_TARGET}
+    ${CONTROLLER_SRC_FILES}
+    ${NRF24L01_plus_SRC_FILES}
+)
+target_include_directories(${CONTROLLER_TARGET}
+    PUBLIC
+    include/controller
+    include/NRF24L01_plus
+)
+target_link_libraries(${CONTROLLER_TARGET}
+    pico_stdlib
+    hardware_spi
+    hardware_adc
+)
+
+pico_enable_stdio_usb(${CONTROLLER_TARGET} 1)
+pico_enable_stdio_uart(${CONTROLLER_TARGET} 1)
+
+pico_add_extra_outputs(${CONTROLLER_TARGET})
