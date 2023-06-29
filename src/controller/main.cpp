@@ -13,7 +13,7 @@ int main() {
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 
     while (true) {
-        data = controller.getJoystickPosition();
+        data = controller.get_joystick_position();
         printf("X axis: %d, Y axis: %d\r\n", data.first, data.second);
 
         gpio_put(PICO_DEFAULT_LED_PIN, 1);

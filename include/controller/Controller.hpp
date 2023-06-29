@@ -1,14 +1,14 @@
-#include <utility>
+#pragma once
 #include "NRF24L01Plus.hpp"
-
-#define ADC0_GPIO 26
-#define ADC1_GPIO 27
+#include "Joystick.hpp"
 
 class Controller {
 public:
     Controller();
-    std::pair<unsigned int, unsigned int> getJoystickPosition();
-    NRF24L01Plus& getTransceiver();
+    NRF24L01Plus& get_transceiver();
+    Joystick& get_joystick();
+    std::pair<unsigned int, unsigned int> get_joystick_position(); 
 private:
     NRF24L01Plus transceiver_;
+    Joystick joystick_;
 };

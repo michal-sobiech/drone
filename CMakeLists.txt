@@ -45,11 +45,15 @@ file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
 add_executable(${CONTROLLER_TARGET}
     ${CONTROLLER_SRC_FILES}
     ${NRF24L01_plus_SRC_FILES}
+    src/joystick/Joystick.cpp
+    src/adc_gpio/AdcGpio.cpp
 )
 target_include_directories(${CONTROLLER_TARGET}
     PUBLIC
     include/controller
     include/NRF24L01_plus
+    include/joystick
+    include/adc_gpio
 )
 target_link_libraries(${CONTROLLER_TARGET}
     pico_stdlib

@@ -1,21 +1,17 @@
-#include "hardware/adc.h"
 #include "Controller.hpp"
+#include "NRF24L01Plus.hpp"
+#include "Joystick.hpp"
+#include "AdcGpio.hpp"
 
-Controller::Controller() {}
-
-std::pair<unsigned int, unsigned int> Controller::getJoystickPosition() {\
-    // Read X
-    adc_gpio_init(ADC0_GPIO);
-    adc_select_input(0);
-    unsigned int x_value = adc_read();
-    // Read Y
-    adc_gpio_init(ADC1_GPIO);
-    adc_select_input(1);
-    unsigned int y_value = adc_read();
-
-    return std:: make_pair(x_value, y_value);
+Controller::Controller() {
+    transceiver_ = NRF24L01Plus();
+    joystick_ = Joystick(AdcGpio(26, 0), AdcGpio(27, 1));
 }
 
-NRF24L01Plus& Controller::getTransceiver() {
+NRF24L01Plus& Controller::get_transceiver() {
     return transceiver_;
 };
+
+std::pair<unsigned int, unsigned int> Controller::get_joystick_position() {
+    return joystick_.get_joystick_position();
+}
