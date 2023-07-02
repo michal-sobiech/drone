@@ -74,18 +74,12 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
     return read_data;
 }
 
-void NRF24L01Plus::setCSN(bool isChosen) {
-    gpio_put(csn_pin_, isChosen);
+void NRF24L01Plus::set_CSN_high() {
+    gpio_put(csn_pin_, 1);
 }
 
-void NRF24L01Plus::setChosen() {
-    // The device is chosen when CSN = 0
-    setCSN(0);
-}
-
-void NRF24L01Plus::setNotChosen() {
-    // The device is NOT chosen when CSN = 1
-    setCSN(1);
+void NRF24L01Plus::set_CSN_low() {
+    gpio_put(csn_pin_, 0);
 }
 
 void NRF24L01Plus::setToTX() {

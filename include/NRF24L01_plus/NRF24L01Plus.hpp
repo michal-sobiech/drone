@@ -16,8 +16,8 @@ class NRF24L01Plus
 public:
     NRF24L01Plus();
     NRF24L01Plus(bool default_mode);
-    void setChosen();
-    void setNotChosen();
+    void set_CSN_high();
+    void set_CSN_low();
     void sendByte(uint8_t data);
     uint8_t receiveByte();
 private:
