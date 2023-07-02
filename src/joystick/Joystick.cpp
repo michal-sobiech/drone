@@ -1,4 +1,5 @@
 #include <utility>
+#include "hardware/adc.h"
 #include "Joystick.hpp"
 #include "AdcGpio.hpp"
 

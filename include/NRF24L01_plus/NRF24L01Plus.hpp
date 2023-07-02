@@ -4,10 +4,9 @@
 #include <cstdio>
 
 #define SPI_BAUDRATE 1000000
-#define SPI_SCK_PIN 2
-#define SPI_CSN_PIN 1
-#define SPI_MOSI_PIN 3
-#define SPI_MISO_PIN 4
+
+#define SPI_0 0
+#define SPI_1 1
 
 #define TX 0
 #define RX 1
@@ -16,15 +15,20 @@ class NRF24L01Plus
 {
 public:
     NRF24L01Plus();
-    NRF24L01Plus(spi_inst_t* spi, uint csn, uint ce, bool default_mode);
+    NRF24L01Plus(bool default_mode);
     void setChosen();
     void setNotChosen();
     void sendByte(uint8_t data);
     uint8_t receiveByte();
 private:
     spi_inst_t* spi_;
-    uint csn_;
-    uint ce_;
+    uint vcc_pin_;
+    uint ce_pin_;
+    uint csn_pin_;
+    uint sck_pin_;
+    uint mosi_pin_;
+    uint miso_pin_;
+    uint irq_pin_;
     bool mode_;
     void setCSN(bool isChosen);
     void write_register(uint8_t reg, uint8_t data);

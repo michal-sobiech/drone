@@ -1,6 +1,5 @@
 #pragma once
 #include <utility>
-#include "hardware/adc.h"
 #include "AdcGpio.hpp"
 
 class Joystick {
