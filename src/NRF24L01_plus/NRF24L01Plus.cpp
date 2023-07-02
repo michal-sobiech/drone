@@ -25,7 +25,7 @@ NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
     gpio_set_function(miso_pin_, GPIO_FUNC_SPI);
 
     // NRF24L01+ config
-    setChosen();
+    CSN_on_and_off();
 
     // At 0x00:
     // bit 0 is RX or TX
@@ -48,13 +48,12 @@ void NRF24L01Plus::write_register(uint8_t reg, uint8_t data)
     // of the command code (001) and the 5-bit argument (AAAAA)
     uint8_t cmd = 0b00100000 | (reg & 0b00011111);
 
-    setChosen();
+    CSN_on_and_off();
     // The process consists of 2 spi cycles.
     // First choose the register,
     spi_write_one_byte(cmd);
     // then write the data
     spi_write_one_byte(data);
-    setNotChosen();
 }
 
 uint8_t NRF24L01Plus::read_register(uint8_t reg)
@@ -62,14 +61,13 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
     // Command R_REGISTER is 000A AAAA
     uint8_t cmd = 0b00011111 & reg;
 
-    setChosen();
+    CSN_on_and_off();
     // Choose the register
     spi_write_one_byte(cmd);
     // Read the data
     // The 0xff is sent because it is recognized as
     // a NOP command by the NRF24L01+ module.
     uint8_t read_data = spi_read_one_byte();
-    setNotChosen();
 
     return read_data;
 }
@@ -126,4 +124,9 @@ uint8_t NRF24L01Plus::spi_read_one_byte() {
     uint8_t read_data;
     spi_read_blocking(spi_, 0xff, &read_data, 1);
     return read_data;
+}
+
+void NRF24L01Plus::CSN_on_and_off() {
+    set_CSN_high();
+    set_CSN_low();
 }
