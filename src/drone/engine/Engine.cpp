@@ -1,3 +1,4 @@
+#include <hardware/pio.h>
 #include "dshot.pio.h"
 #include "Engine.hpp"
 

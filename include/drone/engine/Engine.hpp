@@ -1,10 +1,8 @@
 #include <cstdint>
 #include <stdio.h>
 #include <stdbool.h>
-
 #include <pico/stdlib.h>
 #include <hardware/pio.h>
-
 
 class Engine
 {
