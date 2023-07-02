@@ -37,4 +37,6 @@ private:
     uint8_t spi_read_one_byte();
     void set_CSN_high();
     void set_CSN_low();
+    void enable_chip();
+    void disable_chip();
 };
