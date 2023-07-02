@@ -30,7 +30,6 @@ private:
     uint miso_pin_;
     uint irq_pin_;
     bool mode_;
-    void setCSN(bool isChosen);
     void write_register(uint8_t reg, uint8_t data);
     uint8_t read_register(uint8_t reg);
     void setToTX();
