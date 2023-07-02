@@ -8,25 +8,28 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
+# Common files
+file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
+
 # The main module
 file(GLOB_RECURSE PROJECT_SRC_FILES src/drone/*.cpp)
 add_executable(${PROJECT_NAME}
-    ${PROJECT_SRC_FILES}  
-    # src/drone/Drone.cpp
-    # src/drone/engine/Engine.cpp
-    src/main.cpp
+    ${PROJECT_SRC_FILES}
+    ${NRF24L01_plus_SRC_FILES}
 )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
     include/drone
     include/drone/engine
+    include/NRF24L01_plus
 )
 
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
     hardware_pio
     hardware_spi
+    hardware_adc
 )
 
 pico_generate_pio_header(${PROJECT_NAME}
@@ -41,7 +44,6 @@ pico_add_extra_outputs(drone)
 # Controller
 set(CONTROLLER_TARGET controller)
 file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
-file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
 add_executable(${CONTROLLER_TARGET}
     ${CONTROLLER_SRC_FILES}
     ${NRF24L01_plus_SRC_FILES}
