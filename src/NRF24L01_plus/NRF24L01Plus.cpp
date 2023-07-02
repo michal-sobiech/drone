@@ -10,19 +10,23 @@ NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
     // TODO customization
     spi_ = spi0;
     vcc_pin_ = 4;
-    gpio_put(vcc_pin_, 1);
     ce_pin_ = 5;
     csn_pin_ = 1;
     sck_pin_ = 2;
     mosi_pin_ = 3;
     miso_pin_ = 0;
-    // irq_pin_ = ;         
+    // irq_pin_ = ;     
+
+    gpio_init(vcc_pin_);
+    gpio_put(vcc_pin_, 1);
+    gpio_init(ce_pin_);
 
     spi_init(spi_, SPI_BAUDRATE);
 
     gpio_set_function(sck_pin_, GPIO_FUNC_SPI);
     gpio_set_function(mosi_pin_, GPIO_FUNC_SPI);
     gpio_set_function(miso_pin_, GPIO_FUNC_SPI);
+    gpio_set_function(csn_pin_, GPIO_FUNC_SPI);
 
     // NRF24L01+ config
     CSN_on_and_off();
@@ -95,13 +99,12 @@ void NRF24L01Plus::setToRX() {
 }
 
 void NRF24L01Plus::sendByte(uint8_t data) {
-    ;
-    // setToTX();
+    setToTX();
     // W_TX_PAYLOAD command is 1010 0000
-    // uint8_t cmd = 0b10100000;
-    // spi_write_one_byte(cmd);
-    // // Now send the data
-    // spi_write_one_byte(data);
+    uint8_t cmd = 0b10100000;
+    spi_write_one_byte(cmd);
+    // Now send the data
+    spi_write_one_byte(data);
 }
 
 uint8_t NRF24L01Plus::receiveByte() {
@@ -129,4 +132,12 @@ uint8_t NRF24L01Plus::spi_read_one_byte() {
 void NRF24L01Plus::CSN_on_and_off() {
     set_CSN_high();
     set_CSN_low();
+}
+
+void NRF24L01Plus::enable_chip() {
+    gpio_put(ce_pin_, 1);
+}
+
+void NRF24L01Plus::disable_chip() {
+    gpio_put(ce_pin_, 0);
 }
