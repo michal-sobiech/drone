@@ -14,14 +14,16 @@ int main()
 
     Drone drone = Drone();
 
-    int received_data;
+    uint8_t received_data[5];
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
     while(true) {
-        received_data = drone.get_transceiver().receiveByte();
-        printf("Received data: %d", received_data);
+        drone.get_transceiver().receiveMessage(received_data);
+        printf("Received data: %d\r\n", received_data[0]);
 
         gpio_put(PICO_DEFAULT_LED_PIN, 1);
-        sleep_ms(150);
+        sleep_ms(50);
         gpio_put(PICO_DEFAULT_LED_PIN, 0);
-        sleep_ms(150);
+        sleep_ms(50);
     }
 }
