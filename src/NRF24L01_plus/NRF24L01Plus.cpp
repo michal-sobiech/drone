@@ -9,6 +9,7 @@
 
 NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
 {
+
     // TODO customization
     spi_ = spi0;
     vcc_pin_ = 4;
@@ -43,8 +44,8 @@ NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
     configure();
 
     sleep_ms(5 * 1000);
-    uint8_t reg = read_register(0x00); 
-    printf("PRINT 1: %d\r\n", reg);
+    printf("START 0x00: %d, 0x07: %d\r\n", read_register(0x00), read_register(0x07));
+
 }
 
 void NRF24L01Plus::configure() {
@@ -52,7 +53,7 @@ void NRF24L01Plus::configure() {
     set_CSN_high();
     set_CE_low();
 
-    sleep_ms(100); // 100 ms at least
+    sleep_ms(11); // 10,3 ms at least
 
     // Write to the config register (0x00):
     // bit 0 is RX or TX, we dont initially set this one
@@ -61,7 +62,7 @@ void NRF24L01Plus::configure() {
     // bit 3 is the CRC, set to 1 because we want the CRC
     // bits 4 - 6 are interrupts, all enabled by setting to 0 bc why not
     // bit 7 must be 0
-    uint8_t config_settings = 0b00001010;
+    uint8_t config_settings = 0b01111010;
     // Bit 0
     config_settings = config_settings + mode_;
 
@@ -69,9 +70,7 @@ void NRF24L01Plus::configure() {
     // Wait 1,5 ms after PWR_UP
     sleep_us(1500);
 
-    sleep_ms(5 * 1000);
     uint8_t reg = read_register(0x00); 
-    printf("PRINT 2: %d\r\n", reg);
 
     // Turn off auto ack
     write_register(0x01, 0b00000000);

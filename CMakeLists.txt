@@ -10,12 +10,14 @@ pico_sdk_init()
 
 # Common files
 file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
+file(GLOB_RECURSE MPU6050_SRC_FILES src/MPU6050/*.cpp)
 
 # The main module
 file(GLOB_RECURSE PROJECT_SRC_FILES src/drone/*.cpp)
 add_executable(${PROJECT_NAME}
     ${PROJECT_SRC_FILES}
     ${NRF24L01_plus_SRC_FILES}
+    ${MPU6050_SRC_FILES}
 )
 
 target_include_directories(${PROJECT_NAME}

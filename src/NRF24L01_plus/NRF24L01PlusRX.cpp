@@ -1,6 +1,9 @@
 #include "NRF24L01PlusRX.hpp"
 
-NRF24L01PlusRX::NRF24L01PlusRX() : NRF24L01Plus(RX) {}
+NRF24L01PlusRX::NRF24L01PlusRX() : NRF24L01Plus(RX) {
+    uint8_t status_reg = read_register(0x00);
+    printf("reg: %d\r\n", status_reg);
+}
 
 void NRF24L01PlusRX::receiveMessage(uint8_t received_data[]) {
     // Requirements for going into the TX mode:
@@ -17,8 +20,9 @@ void NRF24L01PlusRX::receiveMessage(uint8_t received_data[]) {
     // the receiver caught anything.
     uint8_t status_reg = read_register(0x07);
     bool data_received = (status_reg >> 6) & 1;
+    printf("0x07 register: %d\r\n", status_reg);
     // printf("Was data received? %s\r\n", data_received ? "yes" : "no");
-    printf("Status reg: %d\r\n", status_reg);
+
     // TODO resetting RX_DR
     if (!data_received) {
         return;
@@ -36,7 +40,6 @@ void NRF24L01PlusRX::receiveMessage(uint8_t received_data[]) {
     write_register(0x07, 0b01000000);
 
     status_reg = read_register(0x07);
-    printf("Status reg: %d\r\n", status_reg);
 
     set_CE_low();
 } 

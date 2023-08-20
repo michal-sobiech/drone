@@ -3,7 +3,7 @@
 #include "hardware/spi.h"
 #include <cstdio>
 
-#define PAYLOAD_LEN 1
+#define PAYLOAD_LEN 5
 
 #define SPI_BAUDRATE 8000000
 
