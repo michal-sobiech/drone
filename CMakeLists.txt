@@ -25,6 +25,7 @@ target_include_directories(${PROJECT_NAME}
     include/drone
     include/drone/engine
     include/NRF24L01_plus
+    include/MPU6050
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -32,6 +33,7 @@ target_link_libraries(${PROJECT_NAME}
     hardware_pio
     hardware_spi
     hardware_adc
+    hardware_i2c
 )
 
 pico_generate_pio_header(${PROJECT_NAME}
