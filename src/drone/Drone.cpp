@@ -1,7 +1,8 @@
+#include "Drone.hpp"
+#include "NRF24L01PlusRX.hpp"
+#include "MPU6050.hpp"
 #include <vector>
 #include <hardware/pio.h>
-#include "NRF24L01PlusRX.hpp"
-#include "Drone.hpp"
 
 Drone::Drone() {
 
@@ -16,9 +17,15 @@ Drone::Drone() {
     // }
 
     // NRF24L01+ setup
-    transceiver_ = NRF24L01PlusRX();
+    // transceiver_ = NRF24L01PlusRX();
+
+    mpu_ = MPU6050();
 }
 
 NRF24L01PlusRX& Drone::get_transceiver() {
     return transceiver_;
+}
+
+MPU6050& Drone::get_mpu() {
+    return mpu_;
 }

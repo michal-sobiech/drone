@@ -1,8 +1,8 @@
+#include "NRF24L01Plus.hpp"
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include <cstdio>
 #include <algorithm>
-#include "NRF24L01Plus.hpp"
 
 // Max 125, because 2525 - 2400
 #define MAX_CHANNEL_FREQ_OFFSET 125
