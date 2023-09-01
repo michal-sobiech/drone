@@ -5,8 +5,8 @@
 
 ControllerSocMeter::ControllerSocMeter() {
     cell_soc_meter_ = CellSocMeter(
-        CONTROLLER_SOC_METER_MIN_V,
-        CONTROLLER_SOC_METER_MAX_V, 
+        CONTROLLER_BAT_MIN_V,
+        CONTROLLER_BAT_MAX_V, 
         AdcGpio(0, 26)
     );
 }
@@ -14,4 +14,3 @@ ControllerSocMeter::ControllerSocMeter() {
 unsigned int ControllerSocMeter::get_soc() {
     return cell_soc_meter_.get_soc();
 }
-
