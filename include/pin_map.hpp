@@ -7,8 +7,8 @@
 // SoC meter and its mux
 #define DRONE_SOC_METER_GPIO_NO 26
 #define DRONE_SOC_METER_ADC_NO 0
-#define DRONE_SOC_MUX_SEL_H_GPIO_NO 21
-#define DRONE_SOC_MUX_SEL_L_GPIO_NO 20
+#define DRONE_SOC_METER_MUX_SEL_H_GPIO_NO 21
+#define DRONE_SOC_METER_MUX_SEL_L_GPIO_NO 20
 
 // +-------------------+
 // |    Controller     |
