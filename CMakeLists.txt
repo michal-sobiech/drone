@@ -29,19 +29,22 @@ add_executable(${DRONE_TARGET}
     src/MPU6050/MPU6050.cpp
     src/adc_unit/AdcUnit.cpp
     src/cell_soc_meter/CellSocMeter.cpp
+    src/multiplexer/FourChannelMux.cpp
 )
 
 target_include_directories(${DRONE_TARGET}
     # Drone
     PUBLIC
     include/drone
-    include/drone_soc_meter
+    include/drone/drone_soc_meter
     include/drone/engine
     # Other
+    include/pin_map
     include/NRF24L01
     include/MPU6050
     include/adc_unit
     include/cell_soc_meter
+    include/multiplexer
 )
 
 target_link_libraries(${DRONE_TARGET}
@@ -72,10 +75,11 @@ add_executable(${CONTROLLER_TARGET}
     src/controller/Controller.cpp
     src/controller/main.cpp
     # Other
-    ${NRF24L01_plus_SRC_FILES}
+    ${NRF24L01_SRC_FILES}
     src/joystick/JoystickManager.cpp
     src/adc_unit/AdcUnit.cpp
     src/cell_soc_meter/CellSocMeter.cpp
+    src/multiplexer/FourChannelMux.cpp
 )
 target_include_directories(${CONTROLLER_TARGET}
     PUBLIC
@@ -83,10 +87,12 @@ target_include_directories(${CONTROLLER_TARGET}
     include/controller
     include/controller/controller_soc_meter
     # Other
-    include/NRF24L01_plus
+    include/pin_map
+    include/NRF24L01
     include/joystick
     include/adc_unit
     include/cell_soc_meter
+    include/multiplexer
 )
 target_link_libraries(${CONTROLLER_TARGET}
     pico_stdlib
