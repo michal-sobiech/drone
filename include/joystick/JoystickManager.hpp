@@ -1,5 +1,6 @@
 #pragma once
 #include "FourChannelMux.hpp"
+#include "AdcUnit.hpp"
 
 class JoystickManager {
 public:
@@ -8,4 +9,4 @@ public:
 private:
     FourChannelMux mux_;
     AdcUnit adc_unit_;
-}   
+};
