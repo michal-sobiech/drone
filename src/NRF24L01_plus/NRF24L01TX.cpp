@@ -1,9 +1,9 @@
 #include <iostream>
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
-#include "NRF24L01PlusTX.hpp"
+#include "NRF24L01TX.hpp"
 
-NRF24L01PlusTX::NRF24L01PlusTX() : NRF24L01Plus(TX) {
+NRF24L01TX::NRF24L01TX() : NRF24L01(TX) {
     printf("0x00: %d, 0x07: %d\r\n", read_register(0x00), read_register(0x07));
 
     // Set TX_ADDR
@@ -12,7 +12,7 @@ NRF24L01PlusTX::NRF24L01PlusTX() : NRF24L01Plus(TX) {
     write_register(0x10, tx_addr, tx_addr_size);
 }
 
-void NRF24L01PlusTX::sendMessage(uint8_t data[]) {
+void NRF24L01TX::sendMessage(uint8_t data[]) {
     // Requirements for going into the TX mode:
     // 1. Put the payload into the TX FIFO
     // 2. PRIM_RX = 0 (already satisfied)

@@ -13,7 +13,7 @@
 #define TX 0
 #define RX 1
 
-class NRF24L01Plus
+class NRF24L01
 {
 protected:
     // variables
@@ -28,7 +28,7 @@ protected:
     bool mode_;
 
     // functions
-    NRF24L01Plus(bool default_mode);
+    NRF24L01(bool default_mode);
     
     void configure();
 

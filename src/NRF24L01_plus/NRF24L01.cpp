@@ -1,4 +1,4 @@
-#include "NRF24L01Plus.hpp"
+#include "NRF24L01.hpp"
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include <cstdio>
@@ -7,7 +7,7 @@
 // Max 125, because 2525 - 2400
 #define MAX_CHANNEL_FREQ_OFFSET 125
 
-NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
+NRF24L01::NRF24L01(bool default_mode): mode_(default_mode)
 {
 
     // TODO customization
@@ -48,7 +48,7 @@ NRF24L01Plus::NRF24L01Plus(bool default_mode): mode_(default_mode)
 
 }
 
-void NRF24L01Plus::configure() {
+void NRF24L01::configure() {
 
     set_CSN_high();
     set_CE_low();
@@ -93,7 +93,7 @@ void NRF24L01Plus::configure() {
     set_CSN_high();
 }
 
-void NRF24L01Plus::write_register(uint8_t reg, uint8_t data[], uint8_t size)
+void NRF24L01::write_register(uint8_t reg, uint8_t data[], uint8_t size)
 {
     // Command W_REGISTER is 001A AAAA.
     // We create it by performing a bitwise OR
@@ -109,11 +109,11 @@ void NRF24L01Plus::write_register(uint8_t reg, uint8_t data[], uint8_t size)
     set_CSN_high();
 }
 
-void NRF24L01Plus::write_register(uint8_t reg, uint8_t data) {
+void NRF24L01::write_register(uint8_t reg, uint8_t data) {
     write_register(reg, &data, 1);
 }
 
-uint8_t NRF24L01Plus::read_register(uint8_t reg)
+uint8_t NRF24L01::read_register(uint8_t reg)
 {
     // Command R_REGISTER is 000A AAAA
     uint8_t reg_choice_cmd = 0b00011111 & reg;
@@ -131,15 +131,15 @@ uint8_t NRF24L01Plus::read_register(uint8_t reg)
     return read_data;
 }
 
-void NRF24L01Plus::set_CSN_high() {
+void NRF24L01::set_CSN_high() {
     gpio_put(csn_pin_, 1);
 }
 
-void NRF24L01Plus::set_CSN_low() {
+void NRF24L01::set_CSN_low() {
     gpio_put(csn_pin_, 0);
 }
 
-// void NRF24L01Plus::spi_write_one_byte(uint8_t data) {
+// void NRF24L01::spi_write_one_byte(uint8_t data) {
 //     set_CE_high();
 //     uint8_t test_data = 13;
 //     // spi_write_blocking(spi_, &data, 1);
@@ -147,7 +147,7 @@ void NRF24L01Plus::set_CSN_low() {
 //     set_CE_low();
 // }
 
-// uint8_t NRF24L01Plus::spi_read_one_byte() {
+// uint8_t NRF24L01::spi_read_one_byte() {
 //     uint8_t read_data;
 //     set_CE_high();
 //     spi_read_blocking(spi_, 0xff, &read_data, 1);
@@ -155,10 +155,10 @@ void NRF24L01Plus::set_CSN_low() {
 //     return read_data;
 // }
 
-void NRF24L01Plus::set_CE_high() {
+void NRF24L01::set_CE_high() {
     gpio_put(ce_pin_, 1);
 }
 
-void NRF24L01Plus::set_CE_low() {
+void NRF24L01::set_CE_low() {
     gpio_put(ce_pin_, 0);
 }

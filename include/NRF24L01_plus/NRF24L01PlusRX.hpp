@@ -1,8 +1,8 @@
 #pragma once
-#include "NRF24L01Plus.hpp"
+#include "NRF24L01.hpp"
 
-class NRF24L01PlusRX : public NRF24L01Plus {
+class NRF24L01RX : public NRF24L01 {
 public:
-    NRF24L01PlusRX();
+    NRF24L01RX();
     void receiveMessage(uint8_t received_data[]);
 };

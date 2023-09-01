@@ -1,11 +1,11 @@
-#include "NRF24L01PlusRX.hpp"
+#include "NRF24L01RX.hpp"
 
-NRF24L01PlusRX::NRF24L01PlusRX() : NRF24L01Plus(RX) {
+NRF24L01RX::NRF24L01RX() : NRF24L01(RX) {
     uint8_t status_reg = read_register(0x00);
     printf("reg: %d\r\n", status_reg);
 }
 
-void NRF24L01PlusRX::receiveMessage(uint8_t received_data[]) {
+void NRF24L01RX::receiveMessage(uint8_t received_data[]) {
     // Requirements for going into the TX mode:
     // 1. PRIM_RX = 1 (already satisfied in the constructor)
     // 2. CE = 1
