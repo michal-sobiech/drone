@@ -10,10 +10,10 @@ public:
     // Recorded ADC voltage divided by max ADC voltage.
     // Returns number of percent
     unsigned int read_percentage();
-private:
-    unsigned int adc_no_;
-    unsigned int gpio_no_;
 
     // Raw ADC value, from 0 to 4096
     unsigned int read();
+private:
+    unsigned int adc_no_;
+    unsigned int gpio_no_;
 };
