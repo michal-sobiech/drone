@@ -20,6 +20,6 @@ unsigned int AdcUnit::read() {
     return adc_read();
 }
 
-unsigned int AdcUnit::read_percent() {
+unsigned int AdcUnit::read_percentage() {
     return (unsigned)(100.0 * float(read()) / 4096.0);
 }

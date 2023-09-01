@@ -9,7 +9,7 @@ public:
 
     // Recorded ADC voltage divided by max ADC voltage.
     // Returns number of percent
-    unsigned int read_percent();
+    unsigned int read_percentage();
 private:
     unsigned int adc_no_;
     unsigned int gpio_no_;
