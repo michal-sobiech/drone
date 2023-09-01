@@ -2,9 +2,10 @@
 
 class FourChannelMux {
 public:
-    FourChannelMux(unsigned int selection_pins_[2]);
+    FourChannelMux();
+    FourChannelMux(unsigned int sel_pin_h, unsigned int sel_pin_l);
     void choose_channel(unsigned int cell_no);
 private:
-    // First one is H, second is L
-    unsigned int selection_pins_[2];
+    unsigned int sel_pin_h_;
+    unsigned int sel_pin_l_;
 };
