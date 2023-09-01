@@ -8,20 +8,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-# +---------------------+
-# |    Common files     |
-# +---------------------+
-
-set(NRF24L01_plus_SRC_FILES 
-    src/NRF24L01_plus/NRF24L01.cpp
-    src/NRF24L01_plus/NRF24L01RX.cpp
-    src/NRF24L01_plus/NRF24L01TX.cpp)
-set(MPU6050_SRC_FILES 
-    src/MPU6050/MPU6050.cpp)
+set(NRF24L01_SRC_FILES
+    src/NRF24L01/NRF24L01.cpp
+    src/NRF24L01/NRF24L01RX.cpp
+    src/NRF24L01/NRF24L01TX.cpp)
 
 # +---------------------+
 # |        Drone        |
 # +---------------------+
+
 set(DRONE_TARGET drone)
 add_executable(${DRONE_TARGET}
     # Drone
@@ -30,17 +25,23 @@ add_executable(${DRONE_TARGET}
     src/drone/drone_soc_meter/DroneSocMeter.cpp
     src/drone/engine/Engine.cpp
     # Other
-    ${NRF24L01_plus_SRC_FILES}
-    ${MPU6050_SRC_FILES}
+    ${NRF24L01_SRC_FILES}
+    src/MPU6050/MPU6050.cpp
+    src/adc_unit/AdcUnit.cpp
+    src/cell_soc_meter/CellSocMeter.cpp
 )
 
 target_include_directories(${DRONE_TARGET}
+    # Drone
     PUBLIC
     include/drone
     include/drone_soc_meter
     include/drone/engine
-    include/NRF24L01_plus
+    # Other
+    include/NRF24L01
     include/MPU6050
+    include/adc_unit
+    include/cell_soc_meter
 )
 
 target_link_libraries(${DRONE_TARGET}
@@ -63,6 +64,7 @@ pico_add_extra_outputs(${DRONE_TARGET})
 # +---------------------+
 # |     Controller      |
 # +---------------------+
+
 set(CONTROLLER_TARGET controller)
 add_executable(${CONTROLLER_TARGET}
     # Controller files
@@ -73,6 +75,7 @@ add_executable(${CONTROLLER_TARGET}
     ${NRF24L01_plus_SRC_FILES}
     src/joystick/JoystickManager.cpp
     src/adc_unit/AdcUnit.cpp
+    src/cell_soc_meter/CellSocMeter.cpp
 )
 target_include_directories(${CONTROLLER_TARGET}
     PUBLIC
@@ -83,6 +86,7 @@ target_include_directories(${CONTROLLER_TARGET}
     include/NRF24L01_plus
     include/joystick
     include/adc_unit
+    include/cell_soc_meter
 )
 target_link_libraries(${CONTROLLER_TARGET}
     pico_stdlib
