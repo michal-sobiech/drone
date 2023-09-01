@@ -1,5 +1,5 @@
 #pragma once
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 
 class CellSocMeter {
 public:
@@ -14,5 +14,5 @@ private:
     unsigned int max_voltage_;
     unsigned int get_voltage();
 
-    AdcGpio adc_gpio_;
+    AdcUnit adc_gpio_;
 };

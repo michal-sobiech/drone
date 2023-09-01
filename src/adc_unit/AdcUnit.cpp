@@ -1,4 +1,4 @@
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 #include "hardware/adc.h"
 
 AdcUnit::AdcUnit() {}

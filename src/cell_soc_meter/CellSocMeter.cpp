@@ -1,9 +1,9 @@
 #include "CellSocMeter.hpp"
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 
 CellSocMeter::CellSocMeter(unsigned int min_voltage,
-    unsigned int max_voltage, AdcGpio adc_gpio): min_voltage_(min_voltage), 
-    max_voltage_(max_voltage), adc_gpio_(AdcGpio(adc_gpio)) {}
+    unsigned int max_voltage, AdcUnit adc_gpio): min_voltage_(min_voltage), 
+    max_voltage_(max_voltage), adc_gpio_(AdcUnit(adc_gpio)) {}
 
 unsigned int CellSocMeter::get_voltage() {
     float percent = float(adc_.read()) / 4096.0;

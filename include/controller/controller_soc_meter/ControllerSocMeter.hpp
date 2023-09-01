@@ -1,5 +1,5 @@
 #pragma once
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 #include "CellSocMeter.hpp"
 
 #define CONTROLLER_BAT_MIN_V 2000

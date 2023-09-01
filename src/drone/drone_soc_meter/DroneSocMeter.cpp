@@ -12,7 +12,7 @@ DroneSocMeter::DroneSocMeter() {
     cell_soc_meter = CellSocMeter(
         DRONE_BAT_CELL_MIN_V,
         DRONE_BAT_CELL_MAX_V,
-        AdcGpio(DRONE_SOC_METER_ADC_NO, DRONE_SOC_METER_GPIO_NO)
+        AdcUnit(DRONE_SOC_METER_ADC_NO, DRONE_SOC_METER_GPIO_NO)
     );
 }
 

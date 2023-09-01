@@ -1,12 +1,12 @@
 #include "Controller.hpp"
 #include "NRF24L01PlusTX.hpp"
 #include "Joystick.hpp"
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 #include "ControllerSocMeter.hpp"
 
 Controller::Controller() {
     transceiver_ = NRF24L01PlusTX();
-    joystick_ = Joystick(AdcGpio(26, 0), AdcGpio(27, 1));
+    joystick_ = Joystick(AdcUnit(26, 0), AdcUnit(27, 1));
     soc_meter_ = ControllerSocMeter();
 }
 

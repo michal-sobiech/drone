@@ -1,13 +1,13 @@
 #pragma once
 #include <utility>
-#include "AdcGpio.hpp"
+#include "AdcUnit.hpp"
 
 class Joystick {
 public:
     Joystick();
-    Joystick(AdcGpio x_axis_gpio, AdcGpio y_axis_gpio);
+    Joystick(AdcUnit x_axis_gpio, AdcUnit y_axis_gpio);
     std::pair<unsigned int, unsigned int> get_joystick_position();
 private:
-    AdcGpio x_axis_adc_gpio_;
-    AdcGpio y_axis_adc_gpio_;
+    AdcUnit x_axis_adc_gpio_;
+    AdcUnit y_axis_adc_gpio_;
 };
