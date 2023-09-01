@@ -5,7 +5,7 @@
 #define DRONE_BAT_CELL_MIN_V 3400
 #define DRONE_BAT_CELL_MAX_V 4200
 
-class DroneSocMeter() {
+class DroneSocMeter {
 public:
     DroneSocMeter();
 
@@ -14,7 +14,7 @@ public:
 private:
     FourChannelMux mux_;
 
-    CellSocMeter cell_soc_meter;
+    CellSocMeter cell_soc_meter_;
 
     // Fills the array with the voltages in mV
     void get_cells_voltage(unsigned int voltages[]);
@@ -22,5 +22,7 @@ private:
     // Set the multiplexer to given cell and read its voltage in mV.
     // Uses a voltage divider.
     // cell_no is 0, 1, 2 or 3
-    unsigned int DroneSocMeter::get_cell_voltage(unsigned int cell_no);
+    unsigned int get_single_cell_voltage(unsigned int cell_no);
+
+    unsigned int get_single_cell_soc(unsigned int cell_no);
 };
