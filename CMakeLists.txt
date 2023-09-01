@@ -8,27 +8,42 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-# Common files
-file(GLOB_RECURSE NRF24L01_plus_SRC_FILES src/NRF24L01_plus/*.cpp)
-file(GLOB_RECURSE MPU6050_SRC_FILES src/MPU6050/*.cpp)
+# +---------------------+
+# |    Common files     |
+# +---------------------+
 
-# The main module
-file(GLOB_RECURSE PROJECT_SRC_FILES src/drone/*.cpp)
-add_executable(${PROJECT_NAME}
-    ${PROJECT_SRC_FILES}
+set(NRF24L01_plus_SRC_FILES 
+    src/NRF24L01_plus/NRF24L01.cpp
+    src/NRF24L01_plus/NRF24L01RX.cpp
+    src/NRF24L01_plus/NRF24L01TX.cpp)
+set(MPU6050_SRC_FILES 
+    src/MPU6050/MPU6050.cpp)
+
+# +---------------------+
+# |        Drone        |
+# +---------------------+
+set(DRONE_TARGET drone)
+add_executable(${DRONE_TARGET}
+    # Drone
+    src/drone/Drone.cpp
+    src/drone/main.cpp
+    src/drone/drone_soc_meter/DroneSocMeter.cpp
+    src/drone/engine/Engine.cpp
+    # Other
     ${NRF24L01_plus_SRC_FILES}
     ${MPU6050_SRC_FILES}
 )
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${DRONE_TARGET}
     PUBLIC
     include/drone
+    include/drone_soc_meter
     include/drone/engine
     include/NRF24L01_plus
     include/MPU6050
 )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${DRONE_TARGET}
     pico_stdlib
     hardware_pio
     hardware_spi
@@ -36,30 +51,38 @@ target_link_libraries(${PROJECT_NAME}
     hardware_i2c
 )
 
-pico_generate_pio_header(${PROJECT_NAME}
+pico_generate_pio_header(${DRONE_TARGET}
     ${CMAKE_CURRENT_LIST_DIR}/src/drone/dshot.pio
 )
 
-pico_enable_stdio_usb(drone 1)
-pico_enable_stdio_uart(drone 1)
+pico_enable_stdio_usb(${DRONE_TARGET} 1)
+pico_enable_stdio_uart(${DRONE_TARGET} 1)
 
-pico_add_extra_outputs(drone)
+pico_add_extra_outputs(${DRONE_TARGET})
 
-# Controller
+# +---------------------+
+# |     Controller      |
+# +---------------------+
 set(CONTROLLER_TARGET controller)
-file(GLOB_RECURSE CONTROLLER_SRC_FILES src/controller/*.cpp)
 add_executable(${CONTROLLER_TARGET}
-    ${CONTROLLER_SRC_FILES}
+    # Controller files
+    src/controller/controller_soc_meter/ControllerSocMeter.cpp
+    src/controller/Controller.cpp
+    src/controller/main.cpp
+    # Other
     ${NRF24L01_plus_SRC_FILES}
-    src/joystick/Joystick.cpp
-    src/adc_gpio/AdcGpio.cpp
+    src/joystick/JoystickManager.cpp
+    src/adc_unit/AdcUnit.cpp
 )
 target_include_directories(${CONTROLLER_TARGET}
     PUBLIC
+    # Controller
     include/controller
+    include/controller/controller_soc_meter
+    # Other
     include/NRF24L01_plus
     include/joystick
-    include/adc_gpio
+    include/adc_unit
 )
 target_link_libraries(${CONTROLLER_TARGET}
     pico_stdlib
