@@ -1,11 +1,12 @@
 #include "JoystickManager.hpp"
 #include "pin_map.hpp"
+#include "FourChannelMux.hpp"
 
 JoystickManager::JoystickManager() {
-    mux_ = FourChannelMux({
+    mux_ = FourChannelMux(
         JOYSTICK_MUX_SEL_H_GPIO_NO,
         JOYSTICK_MUX_SEL_L_GPIO_NO
-    });
+    );
 
     adc_unit_ = AdcUnit(JOYSTICK_GPIO_NO, JOYSTICK_ADC_NO);
 }

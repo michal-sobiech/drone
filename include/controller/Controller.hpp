@@ -1,17 +1,20 @@
 #pragma once
+#include <utility>
 #include "NRF24L01TX.hpp"
-#include "Joystick.hpp"
+#include "JoystickManager.hpp"
 #include "ControllerSocMeter.hpp"
 
 class Controller {
 public:
     Controller();
     NRF24L01TX& get_transceiver();
-    Joystick& get_joystick();
+    JoystickManager& get_joystick_manager();
     ControllerSocMeter& get_soc_meter();
-    std::pair<unsigned int, unsigned int> get_joystick_position(); 
+
+    // Returns pairs of numbers of percent
+    std::pair<std::pair<int, int>, std::pair<int, int>> get_joystick_positions();
 private:
     NRF24L01TX transceiver_;
-    Joystick joystick_;
+    JoystickManager joystick_manager_;
     ControllerSocMeter soc_meter_;
 };
