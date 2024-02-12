@@ -6,7 +6,7 @@ PID::PID() {
 };
 
 
-float PID::calc_y(float y_sp, float prev_y) {
+float PID::calc_u(float y_sp, float prev_y) {
     float e = y_sp - prev_y;
 
     float p_term = _k_p * e;

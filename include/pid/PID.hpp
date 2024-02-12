@@ -5,7 +5,7 @@ class PID {
 public:
     PID();
     // Calculates the control output
-    float calc_y(float y_sp, float prev_y);
+    float calc_u(float y_sp, float prev_y);
 protected:
     float _k_p;
     float _k_i;
