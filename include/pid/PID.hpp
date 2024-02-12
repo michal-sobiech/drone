@@ -3,13 +3,14 @@
 
 class PID {
 public:
-    PID() = default;
+    PID();
     // Calculates the control output
-    float calc_y(float y_sp);
+    float calc_y(float y_sp, float prev_y);
 protected:
-    float k_p;
-    float k_i;
-    float k_d;
-    float last_error;
-    float integral;
+    float _k_p;
+    float _k_i;
+    float _k_d;
+    float _last_error;
+    float _integral;
+    float _dt;
 };
