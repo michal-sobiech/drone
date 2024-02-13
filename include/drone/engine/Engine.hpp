@@ -22,4 +22,5 @@ class Engine
         PID pid_;
         void engine_setup();
         uint percentage_to_DSHOT600(float thrust_percent, char telemetry_bit);
+        void send_esc_command(uint command);
 };

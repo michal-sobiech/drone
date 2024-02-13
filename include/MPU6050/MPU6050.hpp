@@ -22,5 +22,4 @@ private:
     uint8_t read_reg(uint8_t reg);
     void i2c_read(uint8_t r_data[], uint8_t len, bool no_stop = false);
     void i2c_write(uint8_t w_data[], uint8_t len, bool no_stop = false);
-    // bool passes_
 };

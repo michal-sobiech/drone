@@ -1,6 +1,7 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+#include <cstdint>
 #include <hardware/pio.h>
 #include "Drone.hpp"
 #include "NRF24L01RX.hpp"
@@ -10,16 +11,13 @@
 #include "EngineSpeedSetpoints.hpp"
 
 
-using uint = unsigned int;
-
-
 Drone::Drone(
-        unsigned int fr_engine_pin,
-        unsigned int fl_engine_pin, 
-        unsigned int bl_engine_pin,
-        unsigned int br_engine_pin,
+        uint fr_engine_pin,
+        uint fl_engine_pin, 
+        uint bl_engine_pin,
+        uint br_engine_pin,
         float weight,
-        unsigned int engines_pio_no):
+        uint engines_pio_no):
     weight_(weight) {
 
     // Engine setup
