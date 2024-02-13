@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <hardware/pio.h>
+#include <math.h>
 
 #include "Drone.hpp"
 #include "NRF24L01RX.hpp"
@@ -105,17 +106,36 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
 }
 
 
-void Drone::change_roll(float deg) {
+EngineSpeedSetpoints Drone::change_roll(
+    float deg,
+    float min_deg,
+    float max_deg
+) {
     // Rotate around the X axis
-    deg = std::clamp(deg, -90.0f, 90.0f);
+    deg = std::clamp(deg, min_deg, max_deg);
 
-    
+    float rotation_percent = abs(deg / 90.0f);
+
+    float fr_speed = 0;
+    float fl_speed = 0;
+    float bl_speed = rotation_percent;
+    float br_speed = rotation_percent;
+
+    return EngineSpeedSetpoints{
+        fr_speed,
+        fl_speed,
+        bl_speed,
+        br_speed
+    };
 }
 
 
 void Drone::change_pitch(float deg) {
     // Rotate around the Y axis
     deg = std::clamp(deg, -90.0f, 90.0f);
+
+    float motor_force = weight_ / cos(deg);
+
 }
 
 

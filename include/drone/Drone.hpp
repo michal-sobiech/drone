@@ -47,7 +47,11 @@ private:
     void move_x(float x);
     void move_y(float y);
     void move_z(float z);
-    void change_roll(float deg);
+    EngineSpeedSetpoints Drone::change_roll(
+        float deg,
+        float min_deg = -45.0f,
+        float max_deg = 45.0f
+    );
     void change_pitch(float deg);
     void change_yaw(float ang_speed);
     std::array<float, 3> measure_angle();
