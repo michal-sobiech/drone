@@ -3,12 +3,14 @@
 #include <algorithm>
 #include <cstdint>
 #include <hardware/pio.h>
+
 #include "Drone.hpp"
 #include "NRF24L01RX.hpp"
 #include "MPU6050.hpp"
 #include "pin_map.hpp"
 #include "DroneMovement.hpp"
 #include "EngineSpeedSetpoints.hpp"
+#include "PID.hpp"
 
 
 Drone::Drone(
@@ -56,7 +58,7 @@ Engine& Drone::get_engine(EnginePosition engine_pos) {
 
 
 void Drone::set_engines_speed(const EngineSpeedSetpoints &speeds) {
-    ;    
+    ;
 }
 
 void Drone::engine_setup(
@@ -65,7 +67,12 @@ void Drone::engine_setup(
     const std::array<uint, 4>& sm_ids
 ){
     for (uint i = 0; i < engine_pins.size(); i++) {
-        engines_[i] = Engine(pio, engine_pins[i], sm_ids[i]);
+        engines_[i] = Engine(
+            pio,
+            engine_pins[i],
+            sm_ids[i],
+            PID()
+        );
     }
 }
 

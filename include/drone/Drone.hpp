@@ -41,7 +41,7 @@ private:
     );
 
     Engine& get_engine(EnginePosition engine_pos);
-    void set_engines_speed(const std::array<const float, 4> &speeds);
+    void set_engines_speed(const EngineSpeedSetpoints &speeds);
     EngineSpeedSetpoints move(DroneMovement &dm);  
     float get_weight();
     void move_x(float x);
