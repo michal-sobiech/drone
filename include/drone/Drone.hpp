@@ -57,6 +57,6 @@ private:
         float min_deg,
         float max_deg
     );
-    void change_yaw(float ang_speed);
+    EngineSpeedSetpoints change_yaw(float ang_speed);
     std::array<float, 3> measure_angle();
 };
