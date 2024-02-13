@@ -1,19 +1,22 @@
 #include <hardware/pio.h>
 #include "dshot.pio.h"
 #include "Engine.hpp"
+#include "PID.hpp"
 
 #define DSHOT600_MAX_STEPS 2048
 
 
-Engine::Engine() {}
-
-Engine::Engine(PIO pio, uint state_machine_id, uint pin):
-pio_(pio), state_machine_id_(state_machine_id), pin_(pin)
+Engine::Engine(PIO pio, uint state_machine_id, uint pin, PID pid):
+    pio_(pio),
+    state_machine_id_(state_machine_id),
+    pin_(pin),
+    pid_(pid)
 {
     // Initiate the pio program
     uint offset = pio_add_program(pio_, &dshot_program);
     dshot_program_init(pio_, state_machine_id_, offset, pin_);
 }
+
 
 void Engine::set_thrust(float thrust_percent) 
 {
@@ -24,6 +27,7 @@ void Engine::set_thrust(float thrust_percent)
     uint dshot600_code = percentage_to_DSHOT600(thrust_percent, 0);
     pio_sm_put(pio_, state_machine_id_, dshot600_code);
 }
+
 
 uint Engine::percentage_to_DSHOT600(float thrust_percent, char telemetry_bit)
 {

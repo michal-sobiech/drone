@@ -56,13 +56,8 @@ Engine& Drone::get_engine(EnginePosition engine_pos) {
 }
 
 
-void Drone::set_engines_speed(const std::array<const float, 4> &speeds) {
-    /*
-    The index corresponds to the engine.
-    */
-    for (const float &s : speeds) {
-        
-    }
+void Drone::set_engines_speed(const EngineSpeedSetpoints &speeds) {
+    ;    
 }
 
 void Drone::engine_setup(
