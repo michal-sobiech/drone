@@ -1,12 +1,17 @@
 #pragma once
+
 #include <cstdio>
+
 #include "hardware/i2c.h"
+#include "RotationReadings.hpp"
+
 #define MPU6050_I2C_ADDRESS 0x68
+
 
 class MPU6050 {
 public:
     MPU6050();
-    AngleReadings measure_rotation();
+    RotationReadings measure_rotation();
     bool passes_self_tests();
 private:
     i2c_inst_t* i2c_;

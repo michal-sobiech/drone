@@ -1,7 +1,7 @@
 #pragma once
 
 
-struct AngleReadings {
+struct RotationReadings {
     float roll;
     float pitch;
     float yaw;

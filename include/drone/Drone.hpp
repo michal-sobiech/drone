@@ -18,13 +18,14 @@ using EnginePosition = unsigned int;
 
 class Drone {
 public:
-    Drone();
+    Drone(float weight);
     NRF24L01RX& get_transceiver();
     MPU6050& get_mpu();
 private:
     std::array<Engine, 4> engines_;
     NRF24L01RX transceiver_;
     MPU6050 mpu_;
+    const float weight_;
 
     void engine_setup(
         const PIO& pio,
@@ -34,7 +35,8 @@ private:
 
     Engine& get_engine(EnginePosition engine_pos);
     void set_engines_speed(const std::array<const float, 4> &speeds);
-    EngineSpeedSetpoints move(DroneMovement &dm);    
+    EngineSpeedSetpoints move(DroneMovement &dm);  
+    float get_weight();
     void move_x(float x);
     void move_y(float y);
     void move_z(float z);

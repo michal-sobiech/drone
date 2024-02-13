@@ -5,12 +5,11 @@
 
 #define SYS_CLOCK_KHZ 80000
 
-int main()
-{
+int main() {
     mcu_setup();
     Drone drone = Drone();
-    drone.
 }
+
 
 void mcu_setup() {
     stdio_init_all();

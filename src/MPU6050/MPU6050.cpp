@@ -1,6 +1,6 @@
 #include "pico/stdlib.h"
 #include "MPU6050.hpp"
-#include "AngleReadings.hpp"
+#include "RotationReadings.hpp"
 
 
 MPU6050::MPU6050() {
@@ -31,7 +31,7 @@ MPU6050::MPU6050() {
     printf("0x75: %d\r\n", unsigned(who_am_i));
 }
 
-AngleReadings MPU6050::measure_rotation() {
+RotationReadings MPU6050::measure_rotation() {
     // // The address of the first GYRO register is 0x43
     // uint8_t first_reg = 0x43;
     // uint8_t gyro_data[6];  

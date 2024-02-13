@@ -13,7 +13,7 @@
 using uint = unsigned int;
 
 
-Drone::Drone() {
+Drone::Drone(float weight): weight_(weight) {
     const uint DRONE_SOC_METER_GPIO_NO = 26;
     const uint DRONE_SOC_METER_ADC_NO = 0;
     const uint DRONE_SOC_METER_MUX_SEL_H_GPIO_NO = 21;
@@ -35,6 +35,9 @@ Drone::Drone() {
     const uint FRONT_LEFT_ENG_SM = 1;
     const uint BACK_LEFT_ENG_SM = 2;
     const uint BACK_RIGHT_ENG_SM = 3;
+
+    const float DRONE_MASS = 0.25f;
+    const float g_constant = 9.80665f;
 
     // Engine setup
     const PIO engine_pio = (ENG_PIO_NO == 0) ? pio0 : pio1;
@@ -101,10 +104,9 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
     float bl_speed = 0;
     float br_speed = 0;
 
-    // float roatation = 
+    // float rotation = 
 
     // X movement
-
 
     // Y movement
     fr_speed += dm.y;
@@ -113,6 +115,14 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
     br_speed += dm.y;
 
     // Z movement
+    
+
+    return EngineSpeedSetpoints{
+        fr_speed,
+        fl_speed,
+        bl_speed,
+        br_speed
+    };
 }
 
 
@@ -138,4 +148,9 @@ void Drone::change_yaw(float deg) {
 std::array<float, 3> Drone::measure_angle() {
     // return mpu_.measure_rotation();
     ;
+}
+
+
+float Drone::get_weight() {
+
 }
