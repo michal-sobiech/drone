@@ -9,10 +9,11 @@ class Engine
     public:
         Engine();
         Engine(PIO pio, uint state_machine_id, uint pin);
-        void set_thrust(float thrust_level);
+        void set_thrust(float thrust_percent);
     private:
         PIO pio_;
         uint state_machine_id_;
         uint pin_;
-        uint percentage_to_DSHOT600(float thrust_level, char telemetry_bit);
+        void engine_setup();
+        uint percentage_to_DSHOT600(float thrust_percent, char telemetry_bit);
 };
