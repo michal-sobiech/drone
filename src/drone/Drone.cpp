@@ -13,46 +13,24 @@
 using uint = unsigned int;
 
 
-Drone::Drone(float weight): weight_(weight) {
-    const uint DRONE_SOC_METER_GPIO_NO = 26;
-    const uint DRONE_SOC_METER_ADC_NO = 0;
-    const uint DRONE_SOC_METER_MUX_SEL_H_GPIO_NO = 21;
-    const uint DRONE_SOC_METER_MUX_SEL_L_GPIO_NO = 20;
-
-    const uint FRONT_RIGHT_ENG_NO = 0;
-    const uint FRONT_LEFT_ENG_NO = 1;
-    const uint BACK_LEFT_ENG_NO = 2;
-    const uint BACK_RIGHT_ENG_NO = 3;
-
-    const uint ENG_PIO_NO = 0;
-
-    const uint FRONT_RIGHT_ENG_PIN = 0;
-    const uint FRONT_LEFT_ENG_PIN = 15;
-    const uint BACK_LEFT_ENG_PIN = 16;
-    const uint BACK_RIGHT_ENG_PIN = 28;
-
-    const uint FRONT_RIGHT_ENG_SM = 0;
-    const uint FRONT_LEFT_ENG_SM = 1;
-    const uint BACK_LEFT_ENG_SM = 2;
-    const uint BACK_RIGHT_ENG_SM = 3;
-
-    const float DRONE_MASS = 0.25f;
-    const float g_constant = 9.80665f;
+Drone::Drone(
+        unsigned int fr_engine_pin,
+        unsigned int fl_engine_pin, 
+        unsigned int bl_engine_pin,
+        unsigned int br_engine_pin,
+        float weight,
+        unsigned int engines_pio_no):
+    weight_(weight) {
 
     // Engine setup
-    const PIO engine_pio = (ENG_PIO_NO == 0) ? pio0 : pio1;
+    const PIO engine_pio = (engines_pio_no == 0) ? pio0 : pio1;
     const std::array<GpioPin, 4> engine_pins{
-        FRONT_RIGHT_ENG_PIN,
-        FRONT_LEFT_ENG_PIN,
-        BACK_LEFT_ENG_PIN,
-        BACK_RIGHT_ENG_PIN
+        fr_engine_pin,
+        fl_engine_pin,
+        bl_engine_pin,
+        br_engine_pin
     };
-    const std::array<uint, 4> sm_ids{
-        FRONT_RIGHT_ENG_SM,
-        FRONT_LEFT_ENG_SM,
-        BACK_LEFT_ENG_SM,
-        BACK_RIGHT_ENG_SM
-    };
+    const std::array<uint, 4> sm_ids{0, 1, 2, 3};
     engine_setup(engine_pio, engine_pins, sm_ids);
 
     // Transceiver setup

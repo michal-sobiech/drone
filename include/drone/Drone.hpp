@@ -18,7 +18,14 @@ using EnginePosition = unsigned int;
 
 class Drone {
 public:
-    Drone(float weight);
+    Drone(
+        unsigned int fr_engine_pin,
+        unsigned int fl_engine_pin, 
+        unsigned int bl_engine_pin,
+        unsigned int br_engine_pin,
+        float weight,
+        unsigned int engines_pio_no
+    );
     NRF24L01RX& get_transceiver();
     MPU6050& get_mpu();
 private:
