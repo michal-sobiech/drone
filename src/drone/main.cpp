@@ -7,28 +7,6 @@
 
 int main()
 {
-    const uint DRONE_SOC_METER_GPIO_NO = 26;
-    const uint DRONE_SOC_METER_ADC_NO = 0;
-    const uint DRONE_SOC_METER_MUX_SEL_H_GPIO_NO = 21;
-    const uint DRONE_SOC_METER_MUX_SEL_L_GPIO_NO = 20;
-
-    const uint FRONT_RIGHT_ENG_NO = 0;
-    const uint FRONT_LEFT_ENG_NO = 1;
-    const uint BACK_LEFT_ENG_NO = 2;
-    const uint BACK_RIGHT_ENG_NO = 3;
-
-    const uint ENG_PIO_NO = 0;
-
-    const uint FRONT_RIGHT_ENG_PIN = 0;
-    const uint FRONT_LEFT_ENG_PIN = 15;
-    const uint BACK_LEFT_ENG_PIN = 16;
-    const uint BACK_RIGHT_ENG_PIN = 28;
-
-    const uint FRONT_RIGHT_ENG_SM = 0;
-    const uint FRONT_LEFT_ENG_SM = 1;
-    const uint BACK_LEFT_ENG_SM = 2;
-    const uint BACK_RIGHT_ENG_SM = 3;
-
     stdio_init_all();
     adc_init();
 
