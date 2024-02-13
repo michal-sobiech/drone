@@ -12,13 +12,14 @@
 
 
 Drone::Drone(
-        uint fr_engine_pin,
-        uint fl_engine_pin, 
-        uint bl_engine_pin,
-        uint br_engine_pin,
-        float weight,
-        uint engines_pio_no):
-    weight_(weight) {
+    uint fr_engine_pin,
+    uint fl_engine_pin, 
+    uint bl_engine_pin,
+    uint br_engine_pin,
+    float weight,
+    uint engines_pio_no):
+    weight_(weight)
+{
 
     // Engine setup
     const PIO engine_pio = (engines_pio_no == 0) ? pio0 : pio1;
