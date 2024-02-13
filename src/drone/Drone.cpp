@@ -116,6 +116,43 @@ EngineSpeedSetpoints Drone::change_roll(
 
     float rotation_percent = abs(deg / 90.0f);
 
+    float fr_speed;
+    float fl_speed;
+    float bl_speed;
+    float br_speed;
+
+    if (rotation_percent >= 0) {
+        fr_speed = 0;
+        fl_speed = 0;
+        bl_speed = rotation_percent;
+        br_speed = rotation_percent;
+    }
+    else {
+        fr_speed = rotation_percent;
+        fl_speed = rotation_percent;
+        bl_speed = 0;
+        br_speed = 0;
+    }
+
+    return EngineSpeedSetpoints{
+        fr_speed,
+        fl_speed,
+        bl_speed,
+        br_speed
+    };
+}
+
+
+EngineSpeedSetpoints Drone::change_pitch(
+    float deg,
+    float min_deg,
+    float max_deg
+) {
+    // Rotate around the Y axis
+    deg = std::clamp(deg, min_deg, max_deg);
+
+    float rotation_percent = abs(deg / 90.0f);
+
     float fr_speed = 0;
     float fl_speed = 0;
     float bl_speed = rotation_percent;
@@ -127,15 +164,6 @@ EngineSpeedSetpoints Drone::change_roll(
         bl_speed,
         br_speed
     };
-}
-
-
-void Drone::change_pitch(float deg) {
-    // Rotate around the Y axis
-    deg = std::clamp(deg, -90.0f, 90.0f);
-
-    float motor_force = weight_ / cos(deg);
-
 }
 
 

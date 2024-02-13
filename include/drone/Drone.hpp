@@ -52,7 +52,11 @@ private:
         float min_deg = -45.0f,
         float max_deg = 45.0f
     );
-    void change_pitch(float deg);
+    EngineSpeedSetpoints Drone::change_pitch(
+        float deg,
+        float min_deg,
+        float max_deg
+    );
     void change_yaw(float ang_speed);
     std::array<float, 3> measure_angle();
 };
