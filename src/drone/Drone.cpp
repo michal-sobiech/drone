@@ -116,30 +116,22 @@ EngineSpeedSetpoints Drone::change_roll(
 
     float rotation_percent = abs(deg / 90.0f);
 
-    float fr_speed;
-    float fl_speed;
-    float bl_speed;
-    float br_speed;
-
     if (rotation_percent >= 0) {
-        fr_speed = 0;
-        fl_speed = 0;
-        bl_speed = rotation_percent;
-        br_speed = rotation_percent;
+        return EngineSpeedSetpoints{
+            0,
+            0,
+            rotation_percent,
+            rotation_percent
+        };
     }
     else {
-        fr_speed = rotation_percent;
-        fl_speed = rotation_percent;
-        bl_speed = 0;
-        br_speed = 0;
+        return EngineSpeedSetpoints{
+            rotation_percent,
+            rotation_percent,
+            0,
+            0
+        };
     }
-
-    return EngineSpeedSetpoints{
-        fr_speed,
-        fl_speed,
-        bl_speed,
-        br_speed
-    };
 }
 
 
@@ -153,10 +145,24 @@ EngineSpeedSetpoints Drone::change_pitch(
 
     float rotation_percent = abs(deg / 90.0f);
 
-    float fr_speed = 0;
-    float fl_speed = 0;
-    float bl_speed = rotation_percent;
-    float br_speed = rotation_percent;
+    float fr_speed;
+    float fl_speed;
+    float bl_speed;
+    float br_speed;
+
+    if (rotation_percent >= 0) {
+        // Tilt left
+        fr_speed = rotation_percent;
+        fl_speed = 0;
+        bl_speed = 0;
+        br_speed = rotation_percent;
+    }
+    else {
+        fr_speed = rotation_percent;
+        fl_speed = rotation_percent;
+        bl_speed = 0;
+        br_speed = 0;
+    }
 
     return EngineSpeedSetpoints{
         fr_speed,
