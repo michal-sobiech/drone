@@ -11,7 +11,6 @@ using uint = unsigned int;
 
 
 Drone::Drone() {
-
     const uint DRONE_SOC_METER_GPIO_NO = 26;
     const uint DRONE_SOC_METER_ADC_NO = 0;
     const uint DRONE_SOC_METER_MUX_SEL_H_GPIO_NO = 21;
@@ -48,12 +47,12 @@ Drone::Drone() {
         BACK_LEFT_ENG_SM,
         BACK_RIGHT_ENG_SM
     };
-
     engine_setup(engine_pio, engine_pins, sm_ids);
 
-    // NRF24L01+ setup
-    // transceiver_ = NRF24L01RX();
+    // Transceiver setup
+    transceiver_ = NRF24L01RX();
 
+    // Gyroscope setup
     mpu_ = MPU6050();
 }
 
