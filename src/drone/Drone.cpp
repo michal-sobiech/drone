@@ -1,10 +1,13 @@
 #include <vector>
 #include <array>
+#include <algorithm>
 #include <hardware/pio.h>
 #include "Drone.hpp"
 #include "NRF24L01RX.hpp"
 #include "MPU6050.hpp"
 #include "pin_map.hpp"
+#include "DroneMovement.hpp"
+#include "EngineSpeedSetpoints.hpp"
 
 
 using uint = unsigned int;
@@ -67,11 +70,6 @@ MPU6050& Drone::get_mpu() {
 }
 
 
-void Drone::move(DroneMovement &drone_movement) {
-    ;
-}
-
-
 Engine& Drone::get_engine(EnginePosition engine_pos) {
     return engines_[engine_pos];
 }
@@ -94,4 +92,50 @@ void Drone::engine_setup(
     for (uint i = 0; i < engine_pins.size(); i++) {
         engines_[i] = Engine(pio, engine_pins[i], sm_ids[i]);
     }
+}
+
+
+EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
+    float fr_speed = 0;
+    float fl_speed = 0;
+    float bl_speed = 0;
+    float br_speed = 0;
+
+    // float roatation = 
+
+    // X movement
+
+
+    // Y movement
+    fr_speed += dm.y;
+    fl_speed += dm.y;
+    bl_speed += dm.y;
+    br_speed += dm.y;
+
+    // Z movement
+}
+
+
+void Drone::change_roll(float deg) {
+    // Rotate around the X axis
+    deg = std::clamp(deg, -90.0f, 90.0f);
+
+    
+}
+
+
+void Drone::change_pitch(float deg) {
+    // Rotate around the Y axis
+    deg = std::clamp(deg, -90.0f, 90.0f);
+}
+
+
+void Drone::change_yaw(float deg) {
+    // Rotate around the Z axis
+}
+
+
+std::array<float, 3> Drone::measure_angle() {
+    // return mpu_.measure_rotation();
+    ;
 }

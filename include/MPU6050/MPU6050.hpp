@@ -6,7 +6,7 @@
 class MPU6050 {
 public:
     MPU6050();
-    void get_3_axis_rotation(uint16_t* axis_rot);
+    AngleReadings measure_rotation();
     bool passes_self_tests();
 private:
     i2c_inst_t* i2c_;

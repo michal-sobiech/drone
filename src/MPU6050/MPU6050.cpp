@@ -1,5 +1,7 @@
-#include "MPU6050.hpp"
 #include "pico/stdlib.h"
+#include "MPU6050.hpp"
+#include "AngleReadings.hpp"
+
 
 MPU6050::MPU6050() {
     i2c_ = i2c1;
@@ -29,16 +31,16 @@ MPU6050::MPU6050() {
     printf("0x75: %d\r\n", unsigned(who_am_i));
 }
 
-void MPU6050::get_3_axis_rotation(uint16_t* axis_rot) {
-    // The address of the first GYRO register is 0x43
-    uint8_t first_reg = 0x43;
-    uint8_t gyro_data[6];  
-    i2c_write(&first_reg, 1, true);
-    i2c_read(gyro_data, 6);
-    for (uint i = 0; i < 3; i++) {
-        axis_rot[i] = gyro_data[2*i] << 8 + gyro_data[2*i + 1];
-    }
-    return;
+AngleReadings MPU6050::measure_rotation() {
+    // // The address of the first GYRO register is 0x43
+    // uint8_t first_reg = 0x43;
+    // uint8_t gyro_data[6];  
+    // i2c_write(&first_reg, 1, true);
+    // i2c_read(gyro_data, 6);
+    // for (uint i = 0; i < 3; i++) {
+    //     axis_rot[i] = gyro_data[2*i] << 8 + gyro_data[2*i + 1];
+    // }
+    // return;
 }
 
 // uint8_t MPU6050::read_reg(uint8_t reg) {

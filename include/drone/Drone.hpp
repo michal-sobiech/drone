@@ -5,6 +5,7 @@
 #include "MPU6050.hpp"
 #include "Engine.hpp"
 #include "DroneMovement.hpp"
+#include "EngineSpeedSetpoints.hpp"
 
 
 // The engines are numbered like graph quarants
@@ -33,11 +34,12 @@ private:
 
     Engine& get_engine(EnginePosition engine_pos);
     void set_engines_speed(const std::array<const float, 4> &speeds);
-    void move(DroneMovement &drone_movement);
+    EngineSpeedSetpoints move(DroneMovement &dm);    
     void move_x(float x);
     void move_y(float y);
     void move_z(float z);
-    void change_roll(float roll);
-    void change_pitch(float pitch);
-    void change_yaw(float yaw);
+    void change_roll(float deg);
+    void change_pitch(float deg);
+    void change_yaw(float ang_speed);
+    std::array<float, 3> measure_angle();
 };

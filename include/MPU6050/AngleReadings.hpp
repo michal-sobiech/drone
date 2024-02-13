@@ -1,10 +1,7 @@
 #pragma once
 
 
-struct DroneMovement {
-    float x;
-    float y;
-    float z;
+struct AngleReadings {
     float roll;
     float pitch;
     float yaw;
