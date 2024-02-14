@@ -6,11 +6,10 @@
 #define DSHOT600_MAX_STEPS 2048
 
 
-Engine::Engine(PIO pio, uint state_machine_id, uint pin, PID pid):
+Engine::Engine(PIO pio, uint state_machine_id, uint pin):
     pio_(pio),
     state_machine_id_(state_machine_id),
-    pin_(pin),
-    pid_(pid)
+    pin_(pin)
 {
     // Initiate the pio program
     uint offset = pio_add_program(pio_, &dshot_program);

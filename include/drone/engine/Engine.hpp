@@ -13,13 +13,12 @@ class Engine
 {
     public:
         Engine() = default;
-        Engine(PIO pio, uint state_machine_id, uint pin, PID pid);
+        Engine(PIO pio, uint state_machine_id, uint pin);
         void set_thrust(float thrust_percent);
     private:
         PIO pio_;
         uint state_machine_id_;
         uint pin_;
-        PID pid_;
         void engine_setup();
         uint percentage_to_DSHOT600(float thrust_percent, char telemetry_bit);
         void send_esc_command(uint command);
