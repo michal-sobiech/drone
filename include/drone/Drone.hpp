@@ -58,5 +58,5 @@ private:
     EngineSpeeds calc_roll_engine_speeds(float ang_speed);
     EngineSpeeds calc_pitch_engine_speeds(float ang_speed);
     EngineSpeeds change_yaw(float ang_speed);
-    std::array<float, 3> measure_angle();
+    RotationReadings measure_rotation();
 };

@@ -222,9 +222,8 @@ EngineSpeeds Drone::change_yaw(float ang_speed) {
 }
 
 
-std::array<float, 3> Drone::measure_angle() {
-    // return mpu_.measure_rotation();
-    ;
+RotationReadings Drone::measure_rotation() {
+    return mpu_.measure_rotation();
 }
 
 
