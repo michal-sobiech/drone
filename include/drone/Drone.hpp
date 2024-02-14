@@ -38,8 +38,12 @@ private:
     PID roll_pid_;
     PID pitch_pid_;
 
+    void main_loop();
+    DroneMovement get_desired_drone_movement();
+
     float get_weight();
     Engine& get_engine(EnginePosition engine_pos);
+
 
     void engine_setup(
         const PIO& pio,
@@ -47,10 +51,10 @@ private:
         const std::array<uint, 4>& sm_ids
     );
     void set_engines_speed(const EngineSpeeds &speeds);
-    EngineSpeeds move(DroneMovement &dm);  
-    void move_x(float x);
-    void move_y(float y);
-    void move_z(float z);
+    EngineSpeeds move(DroneMovement &dm);
+    EngineSpeeds move_x(float speed);
+    EngineSpeeds move_y(float speed);
+    EngineSpeeds move_z(float speed);
     EngineSpeeds change_roll(float ang_speed);
     EngineSpeeds change_pitch(float ang_speed);
     EngineSpeeds change_yaw(float ang_speed);

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <hardware/pio.h>
-#include <math.h>
+#include <cmath>
 
 #include "Drone.hpp"
 #include "NRF24L01RX.hpp"
@@ -11,7 +11,6 @@
 #include "pin_map.hpp"
 #include "DroneMovement.hpp"
 #include "EngineSpeedSetpoints.hpp"
-#include "PID.hpp"
 
 
 Drone::Drone(
@@ -43,6 +42,51 @@ Drone::Drone(
 }
 
 
+void Drone::main_loop() {
+    RotationReadings rotation = mpu_.measure_rotation();
+    float prev_roll_angle = rotation.roll;
+    float prev_pitch_angle = rotation.pitch;
+
+    while (true) {
+        DroneMovement dm = get_desired_drone_movement();
+        float dest_x_speed = dm.x_speed;
+        float dest_y_speed = dm.y_speed;
+
+        // TEMPORARY
+        float desired_roll_angle = dest_x_speed;
+        float desired_pitch_angle = dest_y_speed;
+        
+        rotation = mpu_.measure_rotation();
+        float current_roll_angle = rotation.roll;
+        float current_pitch_angle = rotation.pitch;
+
+        float roll_control_signal = roll_pid_.calc_u(
+            desired_roll_angle,
+            prev_roll_angle
+        );
+
+        float pitch_control_signal = pitch_pid_.calc_u(
+            desired_pitch_angle,
+            prev_pitch_angle
+        );
+
+        
+    }
+}
+
+
+EngineSpeeds Drone::move_x(float speed) {
+}
+
+
+EngineSpeeds Drone::move_y(float speed) {
+}
+
+
+EngineSpeeds Drone::move_z(float speed) {
+}
+
+
 NRF24L01RX& Drone::get_transceiver() {
     return transceiver_;
 }
@@ -59,7 +103,6 @@ Engine& Drone::get_engine(EnginePosition engine_pos) {
 
 
 void Drone::set_engines_speed(const EngineSpeeds &speeds) {
-    ;
 }
 
 void Drone::engine_setup(
