@@ -50,7 +50,7 @@ private:
         const std::array<GpioPin, 4>& engine_pins, 
         const std::array<uint, 4>& sm_ids
     );
-    void set_engines_speed(const EngineSpeeds &speeds);
+    void set_engines_speeds(const EngineSpeeds &speeds);
     EngineSpeeds move(DroneMovement &dm);
     EngineSpeeds move_x(float speed);
     EngineSpeeds move_y(float speed);

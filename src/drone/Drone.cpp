@@ -70,10 +70,11 @@ void Drone::main_loop() {
             prev_pitch_angle
         );
 
-        EngineSpeeds roll_signals = get_roll_engine_speeds(roll_control_signal);
-        EngineSpeeds pitch_signals = calc_pitch_engine_speeds(pitch_control_signal);
+        EngineSpeeds roll_speeds = get_roll_engine_speeds(roll_control_signal);
+        EngineSpeeds pitch_speeds = calc_pitch_engine_speeds(pitch_control_signal);
     
-        EngineSpeeds final_control_signals = roll_signals + pitch_signals;
+        EngineSpeeds final_speeds = roll_speeds + pitch_speeds;
+        set_engines_speeds(final_speeds);
     }
 }
 
