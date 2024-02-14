@@ -70,8 +70,10 @@ void Drone::main_loop() {
             prev_pitch_angle
         );
 
-        EngineSpeeds roll_signals = calc_roll_engine_signals(roll_control_signal);
-        EngineSpeeds pitch_signals = calc_pitch_engine_signals(pitch_control_signal);
+        EngineSpeeds roll_signals = get_roll_engine_speeds(roll_control_signal);
+        EngineSpeeds pitch_signals = calc_pitch_engine_speeds(pitch_control_signal);
+    
+        EngineSpeeds final_control_signals = roll_signals + pitch_signals;
     }
 }
 
@@ -151,7 +153,7 @@ EngineSpeeds Drone::move(DroneMovement &dm) {
 }
 
 
-EngineSpeeds Drone::calc_roll_engine_signals(float ang_speed) {
+EngineSpeeds Drone::get_roll_engine_speeds(float ang_speed) {
     // Rotate around the X axis
     if (ang_speed >= 0) {
         // Tilt forward
@@ -174,7 +176,7 @@ EngineSpeeds Drone::calc_roll_engine_signals(float ang_speed) {
 }
 
 
-EngineSpeeds Drone::calc_pitch_engine_signals(float ang_speed) {
+EngineSpeeds Drone::calc_pitch_engine_speeds(float ang_speed) {
     // Rotate around the Y axis
     if (ang_speed >= 0) {
         // Tilt right
