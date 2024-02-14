@@ -2,8 +2,8 @@
 
 
 struct DroneMovement {
-    float x;
-    float y;
-    float z;
-    float yaw;
+    float x_speed;
+    float y_speed;
+    float z_speed;
+    float z_ang_speed;
 };

@@ -58,7 +58,7 @@ Engine& Drone::get_engine(EnginePosition engine_pos) {
 }
 
 
-void Drone::set_engines_speed(const EngineSpeedSetpoints &speeds) {
+void Drone::set_engines_speed(const EngineSpeeds &speeds) {
     ;
 }
 
@@ -78,7 +78,7 @@ void Drone::engine_setup(
 }
 
 
-EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
+EngineSpeeds Drone::move(DroneMovement &dm) {
     float fr_speed = 0;
     float fl_speed = 0;
     float bl_speed = 0;
@@ -87,6 +87,7 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
     // float rotation = 
 
     // X movement
+    move_x(dm.x_speed)
 
     // Y movement
     fr_speed += dm.y;
@@ -97,7 +98,7 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
     // Z movement
     
 
-    return EngineSpeedSetpoints{
+    return EngineSpeeds{
         fr_speed,
         fl_speed,
         bl_speed,
@@ -106,30 +107,22 @@ EngineSpeedSetpoints Drone::move(DroneMovement &dm) {
 }
 
 
-EngineSpeedSetpoints Drone::change_roll(
-    float deg,
-    float min_deg,
-    float max_deg
-) {
+EngineSpeeds Drone::change_roll(float ang_speed) {
     // Rotate around the X axis
-    deg = std::clamp(deg, min_deg, max_deg);
-
-    float rotation_percent = abs(deg / 90.0f);
-
-    if (rotation_percent >= 0) {
+    if (ang_speed >= 0) {
         // Tilt forward
-        return EngineSpeedSetpoints{
+        return EngineSpeeds{
             .fr_speed = 0,
             .fl_speed = 0,
-            .bl_speed = rotation_percent,
-            .br_speed = rotation_percent
+            .bl_speed = ang_speed,
+            .br_speed = ang_speed
         };
     }
     else {
         // Tilt backward
-        return EngineSpeedSetpoints{
-            .fr_speed = rotation_percent,
-            .fl_speed = rotation_percent,
+        return EngineSpeeds{
+            .fr_speed = ang_speed,
+            .fl_speed = ang_speed,
             .bl_speed = 0,
             .br_speed = 0
         };
@@ -137,41 +130,34 @@ EngineSpeedSetpoints Drone::change_roll(
 }
 
 
-EngineSpeedSetpoints Drone::change_pitch(
-    float deg,
-    float min_deg,
-    float max_deg
-) {
+EngineSpeeds Drone::change_pitch(float ang_speed) {
     // Rotate around the Y axis
-    deg = std::clamp(deg, min_deg, max_deg);
-
-    float rotation_percent = abs(deg / 90.0f);
-
-    if (rotation_percent >= 0) {
+    if (ang_speed >= 0) {
         // Tilt right
-        return EngineSpeedSetpoints{
+        return EngineSpeeds{
             .fr_speed = 0,
-            .fl_speed = rotation_percent,
-            .bl_speed = rotation_percent,
+            .fl_speed = ang_speed,
+            .bl_speed = ang_speed,
             .br_speed = 0
         };
     }
     else {
         // Tilt left
-        return EngineSpeedSetpoints{
-            .fr_speed = rotation_percent,
+        return EngineSpeeds{
+            .fr_speed = ang_speed,
             .fl_speed = 0,
             .bl_speed = 0,
-            .br_speed = rotation_percent
+            .br_speed = ang_speed
         };
     }
 }
 
 
-EngineSpeedSetpoints Drone::change_yaw(float ang_speed) {
+EngineSpeeds Drone::change_yaw(float ang_speed) {
+    // Rotate around the Z axis
     if (ang_speed >= 0) {
         // Turn right
-        return EngineSpeedSetpoints{
+        return EngineSpeeds{
             .fr_speed = 0,
             .fl_speed = ang_speed,
             .bl_speed = 0,
@@ -180,7 +166,7 @@ EngineSpeedSetpoints Drone::change_yaw(float ang_speed) {
     }
     else {
         // Turn left
-        return EngineSpeedSetpoints{
+        return EngineSpeeds{
             .fr_speed = ang_speed,
             .fl_speed = 0,
             .bl_speed = ang_speed,

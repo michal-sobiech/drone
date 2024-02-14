@@ -1,7 +1,7 @@
 #pragma once
 
 
-struct EngineSpeedSetpoints {
+struct EngineSpeeds {
     float fr_speed;
     float fl_speed;
     float bl_speed;
