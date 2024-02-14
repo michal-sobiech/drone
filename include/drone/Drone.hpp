@@ -55,8 +55,8 @@ private:
     EngineSpeeds move_x(float speed);
     EngineSpeeds move_y(float speed);
     EngineSpeeds move_z(float speed);
-    EngineSpeeds change_roll(float ang_speed);
-    EngineSpeeds change_pitch(float ang_speed);
+    EngineSpeeds calc_roll_engine_signals(float ang_speed);
+    EngineSpeeds calc_pitch_engine_signals(float ang_speed);
     EngineSpeeds change_yaw(float ang_speed);
     std::array<float, 3> measure_angle();
 };

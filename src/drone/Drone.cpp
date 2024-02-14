@@ -10,7 +10,7 @@
 #include "MPU6050.hpp"
 #include "pin_map.hpp"
 #include "DroneMovement.hpp"
-#include "EngineSpeedSetpoints.hpp"
+#include "EngineSpeeds.hpp"
 
 
 Drone::Drone(
@@ -70,7 +70,8 @@ void Drone::main_loop() {
             prev_pitch_angle
         );
 
-        
+        EngineSpeeds roll_signals = calc_roll_engine_signals(roll_control_signal);
+        EngineSpeeds pitch_signals = calc_pitch_engine_signals(pitch_control_signal);
     }
 }
 
@@ -150,7 +151,7 @@ EngineSpeeds Drone::move(DroneMovement &dm) {
 }
 
 
-EngineSpeeds Drone::change_roll(float ang_speed) {
+EngineSpeeds Drone::calc_roll_engine_signals(float ang_speed) {
     // Rotate around the X axis
     if (ang_speed >= 0) {
         // Tilt forward
@@ -173,7 +174,7 @@ EngineSpeeds Drone::change_roll(float ang_speed) {
 }
 
 
-EngineSpeeds Drone::change_pitch(float ang_speed) {
+EngineSpeeds Drone::calc_pitch_engine_signals(float ang_speed) {
     // Rotate around the Y axis
     if (ang_speed >= 0) {
         // Tilt right
