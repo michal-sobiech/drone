@@ -4,7 +4,6 @@ include(pico_sdk_import.cmake)
 
 project(NRF24L01)
 
-
 pico_sdk_init()
 
 set(CMAKE_CXX_STANDARD 11)
@@ -16,11 +15,12 @@ set(SRC_FILES
     src/NRF24L01TX.cpp
 )
 
-add_library(nrf24l01 STATIC ${SRC_FILES})
+set(TARGET nrf24l01)
+add_library(${TARGET} STATIC ${SRC_FILES})
 
-target_include_directories(nrf24l01 PUBLIC include)
+target_include_directories(${TARGET} PUBLIC include)
 
-target_link_libraries(nrf24l01
+target_link_libraries(${TARGET}
     pico_stdlib
 
     hardware_spi
