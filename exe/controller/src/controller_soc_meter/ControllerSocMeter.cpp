@@ -1,8 +1,11 @@
 #include "ControllerSocMeter.hpp"
+
 #include <iostream>
+
 #include "pin_map.hpp"
 #include "AdcUnit.hpp"
 #include "CellSocMeter.hpp"
+
 
 ControllerSocMeter::ControllerSocMeter() {
     cell_soc_meter_ = CellSocMeter(

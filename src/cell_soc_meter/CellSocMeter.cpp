@@ -1,6 +1,7 @@
 #include "CellSocMeter.hpp"
 #include "AdcUnit.hpp"
 
+
 CellSocMeter::CellSocMeter() {}
 
 CellSocMeter::CellSocMeter(unsigned int min_voltage,

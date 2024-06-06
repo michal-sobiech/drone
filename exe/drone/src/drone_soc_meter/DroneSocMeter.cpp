@@ -1,5 +1,4 @@
 #include "DroneSocMeter.hpp"
-#include "pin_map.hpp"
 #include "FourChannelMux.hpp"
 #include "CellSocMeter.hpp"
 

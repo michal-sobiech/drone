@@ -1,39 +1,43 @@
 cmake_minimum_required(VERSION 3.13)
 
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+
 project(drone C CXX ASM)
+
+pico_sdk_init()
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-set(CONTROLLER_TARGET controller)
-add_executable(${CONTROLLER_TARGET}
-    src/controller/controller_soc_meter/ControllerSocMeter.cpp
-    src/controller/Controller.cpp
-    src/controller/main.cpp
+set(TARGET controller)
+add_executable(${TARGET}
+    src/drone_soc_meter/DroneSocMeter.cpp
+    src/engine/Engine.cpp
+    src/Drone.cpp
+    src/main.cpp
 )
 
-target_include_directories(${CONTROLLER_TARGET}
-    PUBLIC
-    # Controller
-    include/controller
-    include/controller/controller_soc_meter
-    # Other
-    include/pin_map
-    include/NRF24L01
-    include/joystick
-    include/adc_unit
-    include/cell_soc_meter
-    include/multiplexer
+target_include_directories(${TARGET} PUBLIC
+    include
+    include/drone_movement
+    include/drone_soc_meter
+    include/engine
 )
 
-target_link_libraries(${CONTROLLER_TARGET}
+target_link_libraries(${TARGET}
     pico_stdlib
+
     hardware_spi
     hardware_adc
 
+    adc_unit
+    four_channel_mux
+    mpu6050
     NRF24L01
+    pid
 )
 
-pico_enable_stdio_usb(${CONTROLLER_TARGET} 1)
-pico_enable_stdio_uart(${CONTROLLER_TARGET} 1)
+pico_enable_stdio_usb(${TARGET} 1)
+pico_enable_stdio_uart(${TARGET} 1)
 
-pico_add_extra_outputs(${CONTROLLER_TARGET})
+pico_add_extra_outputs(${TARGET})

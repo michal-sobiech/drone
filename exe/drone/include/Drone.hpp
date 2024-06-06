@@ -1,5 +1,6 @@
-#include <vector>
 #include <array>
+#include <cstdint>
+#include <vector>
 
 #include "NRF24L01RX.hpp"
 #include "MPU6050.hpp"
@@ -8,50 +9,24 @@
 #include "EngineSpeedSetpoints.hpp"
 #include "PID.hpp"
 
-
-// The engines are numbered like graph quarants
-using EnginePosition = unsigned int;
-#define FRONT_RIGHT 0
-#define FRONT_LEFT 1
-#define BACK_LEFT 2
-#define BACK_RIGHT 3
+#include "EngineManager.hpp"
 
 
 class Drone {
 public:
-    Drone(
-        unsigned int fr_engine_pin,
-        unsigned int fl_engine_pin, 
-        unsigned int bl_engine_pin,
-        unsigned int br_engine_pin,
-        float weight,
-        unsigned int engines_pio_no
-    );
+    Drone(const DroneConfig& config);
     NRF24L01RX& get_transceiver();
     MPU6050& get_mpu();
 private:
-    std::array<Engine, 4> engines_;
-    NRF24L01RX transceiver_;
-    MPU6050 mpu_;
+    EngineManager engine_manager_;
+    NRF24L01RX radio_;
+    MPU6050 gyroscope_;
     const float weight_;
-
-    PID roll_pid_;
-    PID pitch_pid_;
 
     void main_loop();
     DroneMovement get_desired_drone_movement();
 
-    float get_weight();
-    Engine& get_engine(EnginePosition engine_pos);
-
-
-    void engine_setup(
-        const PIO& pio,
-        const std::array<GpioPin, 4>& engine_pins, 
-        const std::array<uint, 4>& sm_ids
-    );
-    void set_engines_speeds(const EngineSpeeds &speeds);
-    EngineSpeeds move(DroneMovement &dm);
+    EngineSpeeds move(const DroneMovement &dm);
     EngineSpeeds move_x(float speed);
     EngineSpeeds move_y(float speed);
     EngineSpeeds move_z(float speed);
@@ -59,4 +34,4 @@ private:
     EngineSpeeds calc_pitch_engine_speeds(float ang_speed);
     EngineSpeeds change_yaw(float ang_speed);
     RotationReadings measure_rotation();
-};
+}

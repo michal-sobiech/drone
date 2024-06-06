@@ -6,4 +6,4 @@ struct DroneMovement {
     float y_speed;
     float z_speed;
     float yaw_speed;
-};
+}

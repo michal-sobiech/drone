@@ -1,25 +1,29 @@
 #pragma once
 
 #include <cstdint>
-#include <stdio.h>
-#include <stdbool.h>
-#include <pico/stdlib.h>
-#include <hardware/pio.h>
+#include <cstdio>
+#include <cstdbool>
 
-#include "PID.hpp"
+#include "pico/stdlib.h"
+#include "hardware/pio.h"
+
+#include "types.hpp"
+
+using DshotCommand = uint16_t;
 
 
-class Engine
-{
-    public:
-        Engine() = default;
-        Engine(PIO pio, uint state_machine_id, uint pin);
-        void set_thrust(float thrust_percent);
-    private:
-        PIO pio_;
-        uint state_machine_id_;
-        uint pin_;
-        void engine_setup();
-        uint percentage_to_DSHOT600(float thrust_percent, char telemetry_bit);
-        void send_esc_command(uint command);
+class Engine {
+public:
+    Engine(PIO pio, uint8_t state_machine_no, GpioNo pin);
+    void set_thrust(float thrust);
+private:
+    PIO pio_;
+    StateMachineNo state_machine_no_;
+    GpioNo pin_;
+
+    DshotCommand percentage_to_DSHOT600(
+        float thrust_percent,
+        bool telemetry_bit
+    );
+    void send_dshot_cmd_to_esc(DshotCommand command);
 };
