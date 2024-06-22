@@ -1,24 +1,18 @@
-#include "UniqueValueMap.hpp"
-#include <initializer_list>
-#include <vector>
+// #include "UniqueValueMap.hpp"
+// #include <initializer_list>
+// #include <optional>
 
 
-// TODO const????
-template <class KeyType, class ValueType, std::size_t N> 
-UniqueValueMap<KeyType, ValueType, N>::UniqueValueMap(
-    std::initializer_list<std::pair<const KeyType, const ValueType>> init_list
-) {
-    static_assert(init_list.size() == N, 'SAMPLE TEXT');
-    if 
-    for (auto new_pair : init_list) {
-        for (auto exisiting_pair : _data) {
-            static_assert(
-                new_pair.first != existing_pair.first
-                & new_pair.second != exisitng_pair.second
-            );
-        }
-        _data.push_back(new_pair);
-    }
-}
+// // template <class KeyType, class ValueType, std::size_t N> 
+// // constexpr ValueType UniqueValueMap<KeyType, ValueType, N>::at(KeyType key) {
+// //     std::optional<ValueType> value;
+// //     for (auto pair : _data) {
+// //         if (pair.first == key) {
+// //             value = pair.second;
+// //         }
+// //     }
+// //     static_assert(value.has_value());
+// //     return value;
+// // }
 
 
