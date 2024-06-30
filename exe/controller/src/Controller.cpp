@@ -15,21 +15,21 @@ Controller::Controller(
     const JoystickManagerConfig& joystick_manager_config,
     const ControllerSocMeterConfig& soc_meter_config
 ) {
-    radio_ = NRF24L01TX(nrf_config);
-    joystick_manager_ = JoystickManager(joystick_manager_config);
-    soc_meter_ = ControllerSocMeter(soc_meter_config);
+    _radio = NRF24L01TX(nrf_config);
+    _joystick_manager = JoystickManager(joystick_manager_config);
+    _soc_meter = ControllerSocMeter(soc_meter_config);
 }
 
 void main_loop() {}
 
 NRF24L01TX& Controller::get_radio() {
-    return radio_;
+    return _radio;
 }
 
 JoystickManager& Controller::get_joystick_manager() {
-    return joystick_manager_;
+    return _joystick_manager;
 }
 
 ControllerSocMeter& Controller::get_soc_meter() {
-    return soc_meter_;
+    return _soc_meter;
 }

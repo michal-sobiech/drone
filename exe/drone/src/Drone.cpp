@@ -18,7 +18,7 @@ Drone::Drone(
     const DroneConfig& config
 ){
     engine_manager_ = EngineManager();
-    radio_ = NRF24L01RX();
+    _radio = NRF24L01RX();
     gyroscope_ = MPU6050();
 }
 

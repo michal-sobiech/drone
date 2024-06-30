@@ -17,9 +17,9 @@ class NRF24L01
 {
 protected:
     // variables
-    spi_inst_t* spi_;
-    uint vcc_pin_;
-    uint ce_pin_;
+    spi_inst_t* _spi;
+    uint _vcc_pin;
+    uint _ce_pin;
     uint csn_pin_;
     uint sck_pin_;
     uint mosi_pin_;
@@ -32,18 +32,18 @@ protected:
     
     void configure();
 
-    void write_register(uint8_t reg, uint8_t* data, uint8_t size);
-    void write_register(uint8_t reg, uint8_t data);
-    uint8_t read_register(uint8_t reg);
+    void _write_register(uint8_t reg, uint8_t* data, uint8_t size);
+    void _write_register(uint8_t reg, uint8_t data);
+    uint8_t _read_register(uint8_t reg);
 
-    void set_to_TX_state();
-    void setToRX();
+    void _set_to_TX_state();
+    void _setToRX();
 
-    void spi_write_one_byte(uint8_t data);
-    uint8_t spi_read_one_byte();
+    void _spi_write_one_byte(uint8_t data);
+    uint8_t _spi_read_one_byte();
 
-    void set_CSN_high();
-    void set_CSN_low();
-    void set_CE_high();
-    void set_CE_low();
+    void _set_CSN_high();
+    void _set_CSN_low();
+    void _set_CE_high();
+    void _set_CE_low();
 };

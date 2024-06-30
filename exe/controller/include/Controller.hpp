@@ -22,7 +22,7 @@ public:
     JoystickManager& get_joystick_manager();
     ControllerSocMeter& get_soc_meter();
 private:
-    NRF24L01TX radio_;
-    JoystickManager joystick_manager_;
-    ControllerSocMeter soc_meter_;
+    NRF24L01TX _radio;
+    JoystickManager _joystick_manager;
+    ControllerSocMeter _soc_meter;
 };

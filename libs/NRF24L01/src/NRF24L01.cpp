@@ -11,32 +11,32 @@ NRF24L01::NRF24L01(bool default_mode): mode_(default_mode)
 {
 
     // TODO customization
-    spi_ = spi0;
-    vcc_pin_ = 4;
-    ce_pin_ = 5;
+    _spi = spi0;
+    _vcc_pin = 4;
+    _ce_pin = 5;
     csn_pin_ = 1;
     sck_pin_ = 2;
     mosi_pin_ = 3;
     miso_pin_ = 0;
-    // irq_pin_ = ;     
+    // irq_pin_ = ; 
 
     // SPI functions
-    spi_init(spi_, SPI_BAUDRATE);
+    spi_init(_spi, SPI_BAUDRATE);
 
     gpio_set_function(sck_pin_, GPIO_FUNC_SPI);
     gpio_set_function(mosi_pin_, GPIO_FUNC_SPI);
     gpio_set_function(miso_pin_, GPIO_FUNC_SPI);
 
-    gpio_init(vcc_pin_);
-    gpio_init(ce_pin_);
+    gpio_init(_vcc_pin);
+    gpio_init(_ce_pin);
     gpio_init(csn_pin_);
 
-    gpio_set_dir(vcc_pin_, GPIO_OUT);
-    gpio_set_dir(ce_pin_, GPIO_OUT);
+    gpio_set_dir(_vcc_pin, GPIO_OUT);
+    gpio_set_dir(_ce_pin, GPIO_OUT);
     gpio_set_dir(csn_pin_, GPIO_OUT);
 
     // Enable the power pin
-    gpio_put(vcc_pin_, 1);
+    gpio_put(_vcc_pin, 1);
 
     set_CE_low();
     set_CSN_high();
@@ -103,9 +103,9 @@ void NRF24L01::write_register(uint8_t reg, uint8_t data[], uint8_t size)
     set_CSN_low();
     // The process consists of 2 spi cycles.
     // First choose the register,
-    spi_write_blocking(spi_, &reg_choice_cmd, 1);
+    spi_write_blocking(_spi, &reg_choice_cmd, 1);
     // then write the data
-    spi_write_blocking(spi_, data, size);
+    spi_write_blocking(_spi, data, size);
     set_CSN_high();
 }
 
@@ -121,11 +121,11 @@ uint8_t NRF24L01::read_register(uint8_t reg)
 
     set_CSN_low();
     // Choose the register
-    spi_write_blocking(spi_, &reg_choice_cmd, 1);
+    spi_write_blocking(_spi, &reg_choice_cmd, 1);
     // Read the data
     // The 0xff is sent because it is recognized as
     // a NOP command by the NRF24L01+ module.
-    spi_read_blocking(spi_, 0xff, &read_data, 1);
+    spi_read_blocking(_spi, 0xff, &read_data, 1);
     set_CSN_high();
 
     return read_data;
@@ -142,23 +142,23 @@ void NRF24L01::set_CSN_low() {
 // void NRF24L01::spi_write_one_byte(uint8_t data) {
 //     set_CE_high();
 //     uint8_t test_data = 13;
-//     // spi_write_blocking(spi_, &data, 1);
-//     spi_write_blocking(spi_, &test_data, 1);
+//     // spi_write_blocking(_spi, &data, 1);
+//     spi_write_blocking(_spi, &test_data, 1);
 //     set_CE_low();
 // }
 
 // uint8_t NRF24L01::spi_read_one_byte() {
 //     uint8_t read_data;
 //     set_CE_high();
-//     spi_read_blocking(spi_, 0xff, &read_data, 1);
+//     spi_read_blocking(_spi, 0xff, &read_data, 1);
 //     set_CE_low();
 //     return read_data;
 // }
 
 void NRF24L01::set_CE_high() {
-    gpio_put(ce_pin_, 1);
+    gpio_put(_ce_pin, 1);
 }
 
 void NRF24L01::set_CE_low() {
-    gpio_put(ce_pin_, 0);
+    gpio_put(_ce_pin, 0);
 }

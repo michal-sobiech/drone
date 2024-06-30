@@ -19,5 +19,5 @@ public:
     CellSocMeter& get_soc_meter();
 private:
     FourChannelMux mux_;
-    CellSocMeter soc_meter_;
+    CellSocMeter _soc_meter;
 };

@@ -5,19 +5,19 @@
 AdcUnit::AdcUnit() {}
 
 AdcUnit::AdcUnit(unsigned int gpio_no, unsigned int adc_no):
-    gpio_no_(gpio_no), adc_no_(adc_no) {}
+    _gpio_no(gpio_no), _adc_no(adc_no) {}
 
 unsigned int AdcUnit::get_adc_no() {
-    return adc_no_;
+    return _adc_no;
 };
 
 unsigned int AdcUnit::get_gpio_no() {
-    return gpio_no_;
+    return _gpio_no;
 }
 
 unsigned int AdcUnit::read() {
-    adc_gpio_init(gpio_no_);
-    adc_select_input(adc_no_);
+    adc_gpio_init(_gpio_no);
+    adc_select_input(_adc_no);
     return adc_read();
 }
 

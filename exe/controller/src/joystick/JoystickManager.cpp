@@ -6,7 +6,6 @@
 
 
 JoystickManager::JoystickManager(JoystickConfig& config) {
-    
 
     mux_ = FourChannelMux(
         JOYSTICK_MUX_SEL_H_GPIO_NO,

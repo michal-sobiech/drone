@@ -19,7 +19,7 @@ public:
     MPU6050& get_mpu();
 private:
     EngineManager engine_manager_;
-    NRF24L01RX radio_;
+    NRF24L01RX _radio;
     MPU6050 gyroscope_;
     const float weight_;
 

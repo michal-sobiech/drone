@@ -35,15 +35,15 @@ void NRF24L01TX::sendMessage(uint8_t data[]) {
     // Clear the TX FIFO
     uint8_t flush_TX_FIFO_cmd = 0b11100001;
     set_CSN_low();
-    spi_write_blocking(spi_, &flush_TX_FIFO_cmd, 1);
+    spi_write_blocking(_spi, &flush_TX_FIFO_cmd, 1);
     set_CSN_high();
 
     // 1.
     // W_TX_PAYLOAD command is 1010 0000
     uint8_t W_TX_cmd = 0b10100000;
     set_CSN_low();
-    spi_write_blocking(spi_, &W_TX_cmd, 1);
-    spi_write_blocking(spi_, data, PAYLOAD_LEN);
+    spi_write_blocking(_spi, &W_TX_cmd, 1);
+    spi_write_blocking(_spi, data, PAYLOAD_LEN);
     set_CSN_high();
 
     bool tx_ds;

@@ -1,5 +1,6 @@
 #pragma once
 
+
 class AdcUnit {
 public:
     AdcUnit();
@@ -14,6 +15,6 @@ public:
     // Raw ADC value, from 0 to 4096
     unsigned int read();
 private:
-    unsigned int adc_no_;
-    unsigned int gpio_no_;
+    unsigned int _adc_no;
+    unsigned int _gpio_no;
 };

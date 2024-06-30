@@ -32,8 +32,8 @@ void NRF24L01RX::receiveMessage(uint8_t received_data[]) {
     uint8_t cmd = 0b01100001;
     uint8_t sent_data = 0xff;
     set_CSN_low();
-    spi_write_blocking(spi_, &cmd, 1);
-    spi_read_blocking(spi_, sent_data, received_data, PAYLOAD_LEN);
+    spi_write_blocking(_spi, &cmd, 1);
+    spi_read_blocking(_spi, sent_data, received_data, PAYLOAD_LEN);
     set_CSN_high();
 
     // Reset RX_DR
