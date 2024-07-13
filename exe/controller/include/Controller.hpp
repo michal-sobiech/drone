@@ -13,7 +13,7 @@
 class Controller {
 public:
     Controller(
-        const Nrf24l01Config& nrf_config,
+        const SpiDeviceConfig& nrf_config,
         const JoystickManagerConfig& joystick_manager_config,
         const ControllerSocMeterConfig& soc_meter_config
     );

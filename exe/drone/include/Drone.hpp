@@ -18,9 +18,9 @@ public:
     NRF24L01RX& get_transceiver();
     MPU6050& get_mpu();
 private:
-    EngineManager engine_manager_;
+    EngineManager _engine_manager;
     NRF24L01RX _radio;
-    MPU6050 gyroscope_;
+    MPU6050 _gyroscope_;
     const float weight_;
 
     void main_loop();

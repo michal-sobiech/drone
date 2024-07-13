@@ -16,9 +16,6 @@ int main() {
     stdio_init_all();
     adc_init();
 
-    Nrf24l01Config radio_config = Nrf24l01Config(
-        
-    );
     JoystickManagerConfig joystick_man_config = JoystickManagerConfig();
     ControllerSocMeterConfig soc_meter_config = ControllerSocMeterConfig();
 
