@@ -5,23 +5,27 @@
 #include "types.hpp"
 
 
-enum PinFunction {
-    RADIO_CE = 0,
-    RADIO_CSN = 0,
-    RADIO_SCK = 0,
-    RADIO_MOSI = 0,
-    RADIO_MISO = 0,
-    RADIO_IRQ = 0
+enum class PinFunction {
+    NRF24L01_CE,
+    NRF24L01_CSN,
+    NRF24L01_SCK,
+    NRF24L01_MOSI,
+    NRF24L01_MISO,
+    NRF24L01_IRQ,
+
+    
 };
 
 
-std::map<PinFunction, GpioNo> gpio_pins{
-    {PinFunction::RADIO_CE, 0},
-    {PinFunction::RADIO_CSN, 0},
-    {PinFunction::RADIO_SCK, 0},
-    {PinFunction::RADIO_MOSI, 0},
-    {PinFunction::RADIO_MISO, 0},
-    {PinFunction::RADIO_IRQ, 0}
+const std::map<const PinFunction, const GpioNo> gpio_pins{
+    {PinFunction::NRF24L01_CE, 0},
+    {PinFunction::NRF24L01_CSN, 5},
+    {PinFunction::NRF24L01_SCK, 2},
+    {PinFunction::NRF24L01_MOSI, 3},
+    {PinFunction::NRF24L01_MISO, 4},
+    {PinFunction::NRF24L01_IRQ, 1},
+
+
 };
 
 constexpr
